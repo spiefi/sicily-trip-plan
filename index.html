@@ -4,12 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Western Sicily Trip Plan - September 2026</title>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIINfQ5nJ48D8HO9b3A0qQOTNF5UGtSoOPk="
+      crossorigin=""
+    />
     <style>
       :root {
         --ink: #172126;
         --muted: #5e6970;
         --paper: #f7f2e8;
         --panel: #fffdf8;
+        --wash: #eef4f2;
         --line: #ded4c4;
         --sea: #0f7189;
         --deep: #103f4f;
@@ -31,11 +38,13 @@
       body {
         margin: 0;
         color: var(--ink);
-        background: var(--paper);
+        background:
+          linear-gradient(180deg, #f7f2e8 0, #eef4f2 34%, #fbf7ee 100%);
         font-family:
           Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
           "Segoe UI", sans-serif;
         line-height: 1.5;
+        overflow-x: hidden;
       }
 
       a {
@@ -83,6 +92,7 @@
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
+        max-width: 100%;
       }
 
       .nav-links a,
@@ -176,6 +186,10 @@
         padding: 46px 0;
       }
 
+      .section:nth-child(even) {
+        background: rgba(255, 255, 255, 0.32);
+      }
+
       .section-head {
         display: flex;
         align-items: end;
@@ -247,7 +261,7 @@
         border: 1px solid var(--line);
         border-radius: 8px;
         background: var(--panel);
-        box-shadow: var(--shadow);
+        box-shadow: 0 14px 34px rgba(32, 35, 30, 0.08);
       }
 
       .panel,
@@ -298,11 +312,241 @@
         overflow: hidden;
       }
 
-      .map-card iframe {
-        display: block;
+      #trip-map {
         width: 100%;
-        min-height: 520px;
-        border: 0;
+        min-height: 620px;
+        background: #dce9e8;
+      }
+
+      .map-fallback {
+        display: grid;
+        min-height: 220px;
+        place-items: center;
+        padding: 24px;
+        color: var(--muted);
+        text-align: center;
+      }
+
+      .stop-marker {
+        width: 18px;
+        height: 18px;
+        border: 3px solid white;
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
+      }
+
+      .leaflet-popup-content {
+        margin: 12px;
+        min-width: 190px;
+        color: var(--ink);
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      .leaflet-popup-content strong {
+        display: block;
+        margin-bottom: 4px;
+      }
+
+      .leaflet-popup-content span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
+      .map-legend {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 12px;
+        border-top: 1px solid var(--line);
+        background: var(--panel);
+      }
+
+      .legend-item {
+        min-height: 28px;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 0 10px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 800;
+      }
+
+      .legend-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+      }
+
+      .place-board {
+        display: grid;
+        grid-template-columns: 0.85fr 1.15fr;
+        gap: 18px;
+      }
+
+      .filter-panel {
+        position: sticky;
+        top: 14px;
+        align-self: start;
+      }
+
+      .filter-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .filter-button {
+        min-height: 34px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 0 11px;
+        color: var(--ink);
+        background: white;
+        font: inherit;
+        font-size: 0.84rem;
+        font-weight: 850;
+        cursor: pointer;
+      }
+
+      .filter-button.is-active {
+        color: white;
+        border-color: var(--deep);
+        background: var(--deep);
+      }
+
+      .stop-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .stop-card {
+        display: grid;
+        gap: 7px;
+        padding: 15px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+      }
+
+      .stop-card h3 {
+        margin: 0;
+      }
+
+      .stop-card p {
+        margin: 0;
+      }
+
+      .stop-card.must {
+        border-color: rgba(15, 113, 137, 0.38);
+        background: #f7fffd;
+      }
+
+      .stop-card.skip {
+        opacity: 0.78;
+      }
+
+      .stop-title-row {
+        display: flex;
+        align-items: start;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .judgement {
+        flex: none;
+        min-height: 26px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 9px;
+        border-radius: 999px;
+        color: white;
+        background: var(--sea);
+        font-size: 0.72rem;
+        font-weight: 900;
+        text-transform: uppercase;
+      }
+
+      .judgement.optional {
+        background: var(--sun);
+      }
+
+      .judgement.skip {
+        background: var(--muted);
+      }
+
+      .stop-empty {
+        grid-column: 1 / -1;
+        padding: 18px;
+        border: 1px dashed var(--line);
+        border-radius: 8px;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.58);
+      }
+
+      .stop-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 7px;
+        margin: 8px 0;
+      }
+
+      .mini-pill {
+        min-height: 24px;
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 0 8px;
+        color: var(--muted);
+        background: rgba(23, 33, 38, 0.07);
+        font-size: 0.75rem;
+        font-weight: 800;
+      }
+
+      .day-extra {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 10px;
+      }
+
+      .micro {
+        padding: 10px;
+        border: 1px solid rgba(222, 212, 196, 0.9);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.58);
+      }
+
+      .micro b {
+        display: block;
+        margin-bottom: 3px;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+      }
+
+      .micro span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.84rem;
+      }
+
+      .daily-plan {
+        margin-top: 14px;
+        padding: 14px;
+        border-left: 4px solid var(--sea);
+        border-radius: 0 8px 8px 0;
+        background: rgba(15, 113, 137, 0.08);
+      }
+
+      .daily-plan ul {
+        margin: 8px 0 0;
+        padding-left: 19px;
       }
 
       .route-list {
@@ -490,7 +734,7 @@
 
         h1 {
           max-width: 100%;
-          font-size: clamp(2.35rem, 13vw, 3.35rem);
+          font-size: clamp(2.15rem, 10vw, 2.85rem);
           line-height: 0.96;
           overflow-wrap: anywhere;
         }
@@ -503,6 +747,12 @@
         .section-head {
           align-items: flex-start;
           flex-direction: column;
+        }
+
+        .nav-links {
+          width: 100%;
+          display: grid;
+          grid-template-columns: repeat(4, max-content);
         }
 
         .hero-stats,
@@ -527,8 +777,18 @@
           padding: 0 14px;
         }
 
-        .map-card iframe {
+        #trip-map {
           min-height: 420px;
+        }
+
+        .place-board,
+        .stop-grid,
+        .day-extra {
+          grid-template-columns: 1fr;
+        }
+
+        .filter-panel {
+          position: static;
         }
       }
     </style>
@@ -540,7 +800,9 @@
           <div class="brand">Marcin's Western Sicily Plan</div>
           <div class="nav-links" aria-label="Page navigation">
             <a href="#route">Route</a>
+            <a href="#map">Map</a>
             <a href="#days">Days</a>
+            <a href="#map">Places</a>
             <a href="#stays">Hotels</a>
             <a href="#food">Food</a>
             <a href="#booking">Book</a>
@@ -550,7 +812,7 @@
 
       <div class="shell hero-copy">
         <div class="kicker"><span class="dot"></span> Draft plan checked 29 May 2026</div>
-        <h1>Sicily, but lazy in the correct places.</h1>
+        <h1>Sicily, but lazy<br />in the correct<br />places.</h1>
         <p>
           9 nights around 19-28 September 2026 for 4 people. Berlin to Palermo,
           rental car, three bases, beaches first, food always, and no performative
@@ -580,12 +842,15 @@
 
           <div class="route-layout">
             <div class="map-card">
-              <iframe
-                title="Google map of the western Sicily route"
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"
-                src="https://www.google.com/maps?q=Palermo%20Scopello%20San%20Vito%20Lo%20Capo%20Trapani%20Marsala%20Favignana%20Sicily&output=embed"
-              ></iframe>
+              <div id="trip-map" role="img" aria-label="Interactive map with western Sicily trip stops"></div>
+              <div class="map-legend" aria-label="Map legend">
+                <span class="legend-item"><span class="legend-dot" style="background:#103f4f"></span>Base</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#0f7189"></span>Beach</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#64733f"></span>Attraction</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#b4472d"></span>Food</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#7b4f9f"></span>Ferry / airport</span>
+                <span class="legend-item"><span class="legend-dot" style="background:#d8952d"></span>Optional</span>
+              </div>
             </div>
 
             <aside class="panel">
@@ -627,6 +892,42 @@
                 <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Marsala&destination=Palermo%20Airport&travelmode=driving" target="_blank" rel="noreferrer">Marsala to PMO</a>
               </div>
             </aside>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="map">
+        <div class="shell">
+          <div class="section-head">
+            <h2>All Stops Map Board</h2>
+            <p>
+              These are the stops worth considering, not a checklist to complete.
+              The map shows bases, beaches, food, ferry, viewpoints, and optional
+              detours so you can see what clusters naturally.
+            </p>
+          </div>
+
+          <div class="place-board">
+            <aside class="panel filter-panel">
+              <span class="tag">Use this like a control room</span>
+              <h3>How to read it</h3>
+              <p class="muted">
+                Must-do means it directly supports beaches, food, or Dolce Vita.
+                Optional means good if timing/weather/energy fits. Skip means I
+                would not force it on this trip unless someone specifically wants it.
+              </p>
+              <div class="filter-buttons" aria-label="Stop filters">
+                <button class="filter-button is-active" type="button" data-filter="all">All</button>
+                <button class="filter-button" type="button" data-filter="base">Bases</button>
+                <button class="filter-button" type="button" data-filter="beach">Beaches</button>
+                <button class="filter-button" type="button" data-filter="attraction">Attractions</button>
+                <button class="filter-button" type="button" data-filter="food">Food</button>
+                <button class="filter-button" type="button" data-filter="transport">Ferry / airport</button>
+                <button class="filter-button" type="button" data-filter="optional">Optional</button>
+              </div>
+            </aside>
+
+            <div class="stop-grid" id="stop-list" aria-live="polite"></div>
           </div>
         </div>
       </section>
@@ -697,6 +998,12 @@
                   <div class="slot"><b>Afternoon</b><p>Check in. Walk Quattro Canti, Piazza Pretoria, Via Maqueda.</p></div>
                   <div class="slot"><b>Evening</b><p>Dinner around Vucciria/Kalsa. Try arancine, panelle, sfincione.</p></div>
                 </div>
+                <div class="day-extra">
+                  <div class="micro"><b>Drive</b><span>PMO to Palermo center: ~35 min, traffic can double it.</span></div>
+                  <div class="micro"><b>Parking</b><span>Do not freestyle old-town parking. Use hotel garage or paid lot.</span></div>
+                  <div class="micro"><b>Book</b><span>Restaurant only if landing is early. Otherwise stay flexible.</span></div>
+                  <div class="micro"><b>Backup</b><span>If flight lands late, skip sightseeing and just eat near the hotel.</span></div>
+                </div>
                 <div class="actions">
                   <a class="link-button" href="https://www.google.com/maps/search/hotels+Palermo+historic+center+parking/" target="_blank" rel="noreferrer">Palermo hotel map</a>
                   <a class="link-button" href="https://www.google.com/maps/search/Antica+Focacceria+San+Francesco+Palermo/" target="_blank" rel="noreferrer">Antica Focacceria</a>
@@ -714,6 +1021,12 @@
                   <div class="slot"><b>Morning</b><p>Ballaro or Capo market. Coffee, cannoli, street food reconnaissance.</p></div>
                   <div class="slot"><b>Afternoon</b><p>Swim at Mondello, or drive ~1h to Cefalu beach.</p></div>
                   <div class="slot"><b>Evening</b><p>Sleep Palermo for less moving, or Cefalu if you want pretty seaside immediately.</p></div>
+                </div>
+                <div class="day-extra">
+                  <div class="micro"><b>Best version</b><span>Market morning plus Mondello swim keeps the day light.</span></div>
+                  <div class="micro"><b>Cefalu</b><span>Worth it if you love postcard towns; less efficient for the route.</span></div>
+                  <div class="micro"><b>Food</b><span>Market snacks for lunch, proper seafood dinner later.</span></div>
+                  <div class="micro"><b>Skip</b><span>Do not add Monreale unless the group really wants architecture.</span></div>
                 </div>
                 <div class="actions">
                   <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Palermo&destination=Mondello%20Beach&travelmode=driving" target="_blank" rel="noreferrer">Palermo to Mondello</a>
@@ -733,6 +1046,12 @@
                   <div class="slot"><b>Afternoon</b><p>Tonnara di Scopello swim if access/tickets work. Backup: Guidaloca beach.</p></div>
                   <div class="slot"><b>Evening</b><p>Dinner in Scopello village or Castellammare harbor.</p></div>
                 </div>
+                <div class="day-extra">
+                  <div class="micro"><b>Check-in</b><span>Choose this hotel by parking and view, not just room photos.</span></div>
+                  <div class="micro"><b>Tonnara</b><span>Can be paid/limited. Check access before promising the group.</span></div>
+                  <div class="micro"><b>Backup swim</b><span>Guidaloca is easier, less iconic, and often the calmer move.</span></div>
+                  <div class="micro"><b>Dinner</b><span>Reserve if staying in Scopello; village options are limited.</span></div>
+                </div>
                 <div class="actions">
                   <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Palermo&destination=Scopello%20Sicily&travelmode=driving" target="_blank" rel="noreferrer">Drive route</a>
                   <a class="link-button" href="https://www.google.com/maps/search/Tonnara+di+Scopello/" target="_blank" rel="noreferrer">Tonnara map</a>
@@ -750,6 +1069,12 @@
                   <div class="slot"><b>Morning</b><p>Enter from Scopello side. Walk to Cala Capreria first.</p></div>
                   <div class="slot"><b>Afternoon</b><p>Continue to Cala dell'Uzzo or Cala Tonnarella dell'Uzzo if heat is manageable.</p></div>
                   <div class="slot"><b>Evening</b><p>Low-effort dinner. Everyone will be salty and pleased.</p></div>
+                </div>
+                <div class="day-extra">
+                  <div class="micro"><b>Timing</b><span>Start before 9:00. Shade is not your friend here.</span></div>
+                  <div class="micro"><b>Gear</b><span>Water, shoes, hat, snacks. Flip-flop bravery is bad planning.</span></div>
+                  <div class="micro"><b>Route</b><span>Cala Capreria is the sensible minimum; Uzzo is the bigger push.</span></div>
+                  <div class="micro"><b>Weather</b><span>If windy/too hot, swap with Day 6 and do Macari instead.</span></div>
                 </div>
                 <div class="actions">
                   <a class="link-button" href="https://www.google.com/maps/search/Riserva+dello+Zingaro+Ingresso+Sud/" target="_blank" rel="noreferrer">South entrance</a>
@@ -769,6 +1094,12 @@
                   <div class="slot"><b>Afternoon</b><p>Beach time. If too crowded, pivot to Macari/Bue Marino.</p></div>
                   <div class="slot"><b>Evening</b><p>Cous Cous Fest dinner, then drive back to your quieter base.</p></div>
                 </div>
+                <div class="day-extra">
+                  <div class="micro"><b>Festival</b><span>Arrive early or accept parking pain. This is the crowded day.</span></div>
+                  <div class="micro"><b>Beach</b><span>San Vito is the sandy classic, but crowds will be real.</span></div>
+                  <div class="micro"><b>Food</b><span>Use the festival for cous cous, street food, and atmosphere.</span></div>
+                  <div class="micro"><b>Exit plan</b><span>Do not stay too late if driving back on dark coastal roads.</span></div>
+                </div>
                 <div class="actions">
                   <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Scopello%20Sicily&destination=San%20Vito%20Lo%20Capo&travelmode=driving" target="_blank" rel="noreferrer">Scopello to San Vito</a>
                   <a class="link-button" href="https://www.google.com/maps/search/Cous+Cous+Fest+San+Vito+Lo+Capo/" target="_blank" rel="noreferrer">Festival map</a>
@@ -786,6 +1117,12 @@
                   <div class="slot"><b>Morning</b><p>Sleep in. Coffee. Short drive to Macari coastline.</p></div>
                   <div class="slot"><b>Afternoon</b><p>Bue Marino rocks or Baia Santa Margherita shuttle beaches.</p></div>
                   <div class="slot"><b>Evening</b><p>Sunset viewpoint, dinner in Castellammare.</p></div>
+                </div>
+                <div class="day-extra">
+                  <div class="micro"><b>Purpose</b><span>Protected lazy day. No transfer, no forced culture, no guilt.</span></div>
+                  <div class="micro"><b>Best stop</b><span>Bue Marino for rocks and water; Baia Santa Margherita for easier beach.</span></div>
+                  <div class="micro"><b>Lunch</b><span>Keep it simple near Macari/San Vito, or picnic from a bakery.</span></div>
+                  <div class="micro"><b>Optional</b><span>Segesta temple only if the group wants one ancient-site hit.</span></div>
                 </div>
                 <div class="actions">
                   <a class="link-button" href="https://www.google.com/maps/search/Baia+Santa+Margherita+Macari/" target="_blank" rel="noreferrer">Baia Santa Margherita</a>
@@ -805,6 +1142,12 @@
                   <div class="slot"><b>Afternoon</b><p>Lunch in Trapani, check into Marsala/Trapani base.</p></div>
                   <div class="slot"><b>Evening</b><p>Salt pans sunset at Stagnone or Nubia.</p></div>
                 </div>
+                <div class="day-extra">
+                  <div class="micro"><b>Drive</b><span>Scopello to Erice ~1h. Erice to Marsala ~1h15 with stops.</span></div>
+                  <div class="micro"><b>Erice rule</b><span>Go if visibility is good. If cloudy, skip and go straight west.</span></div>
+                  <div class="micro"><b>Sunset</b><span>Salt pans need golden hour. Check sunset time and work backwards.</span></div>
+                  <div class="micro"><b>Stay</b><span>Trapani for ferry ease, Marsala for prettier final evenings.</span></div>
+                </div>
                 <div class="actions">
                   <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Scopello%20Sicily&destination=Marsala&waypoints=Erice%7CTrapani&travelmode=driving" target="_blank" rel="noreferrer">Full road day</a>
                   <a class="link-button" href="https://www.google.com/maps/search/Erice+Sicily/" target="_blank" rel="noreferrer">Erice</a>
@@ -822,6 +1165,12 @@
                   <div class="slot"><b>Morning</b><p>Hydrofoil Trapani to Favignana, roughly 30-40 min. Rent e-bikes.</p></div>
                   <div class="slot"><b>Afternoon</b><p>Cala Rossa, Cala Azzurra, Bue Marino. Pick based on wind.</p></div>
                   <div class="slot"><b>Evening</b><p>Tuna dinner, ferry back, or sleep on Favignana if you choose island mode.</p></div>
+                </div>
+                <div class="day-extra">
+                  <div class="micro"><b>Book</b><span>Check ferry times the night before and buy earlier crossings.</span></div>
+                  <div class="micro"><b>Transport</b><span>E-bikes are the right move for 4 people; scooters only if confident.</span></div>
+                  <div class="micro"><b>Wind</b><span>Ask rental shop which side is calmer that day.</span></div>
+                  <div class="micro"><b>Food</b><span>Tuna, granita, simple seafood. Do not overcomplicate island lunch.</span></div>
                 </div>
                 <div class="actions">
                   <a class="link-button" href="https://www.google.com/maps/search/Trapani+ferry+terminal+Favignana/" target="_blank" rel="noreferrer">Trapani ferry</a>
@@ -841,6 +1190,12 @@
                   <div class="slot"><b>Afternoon</b><p>Wine tasting, Mozia lagoon boat, or repeat Favignana if the group is obsessed.</p></div>
                   <div class="slot"><b>Evening</b><p>Final long dinner. Marsala seafood and wine, no rush.</p></div>
                 </div>
+                <div class="day-extra">
+                  <div class="micro"><b>Best version</b><span>Cantine Florio plus Stagnone lagoon sunset. Very Dolce Vita.</span></div>
+                  <div class="micro"><b>Beach version</b><span>Repeat Favignana or do San Teodoro/Stagnone if wind suits.</span></div>
+                  <div class="micro"><b>Culture</b><span>Mozia is a gentle half-day, not a sweaty museum marathon.</span></div>
+                  <div class="micro"><b>Reserve</b><span>Book final dinner ahead. Sunday evenings can be awkward.</span></div>
+                </div>
                 <div class="actions">
                   <a class="link-button" href="https://www.google.com/maps/search/Cantine+Florio+Marsala/" target="_blank" rel="noreferrer">Cantine Florio</a>
                   <a class="link-button" href="https://www.google.com/maps/search/Mozia+Marsala/" target="_blank" rel="noreferrer">Mozia lagoon</a>
@@ -858,6 +1213,12 @@
                   <div class="slot"><b>Morning</b><p>Pack, coffee, checkout.</p></div>
                   <div class="slot"><b>Afternoon</b><p>Drive to PMO, return car, fly home.</p></div>
                   <div class="slot"><b>Evening</b><p>Berlin. Start pretending you will cook Sicilian food at home.</p></div>
+                </div>
+                <div class="day-extra">
+                  <div class="micro"><b>Buffer</b><span>Leave Marsala at least 4h before departure, more if flight is midday.</span></div>
+                  <div class="micro"><b>Fuel</b><span>Refuel before airport zone; do not make this the final boss.</span></div>
+                  <div class="micro"><b>Car</b><span>Photograph car return condition and fuel receipt.</span></div>
+                  <div class="micro"><b>Backup</b><span>If return flight is early, sleep last night near Palermo/PMO instead.</span></div>
                 </div>
                 <div class="actions">
                   <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Marsala&destination=Palermo%20Airport&travelmode=driving" target="_blank" rel="noreferrer">Marsala to PMO</a>
@@ -1089,5 +1450,436 @@
         and festival crowd conditions.
       </div>
     </footer>
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+    ></script>
+    <script>
+      const stops = [
+        {
+          name: "Palermo Airport (PMO)",
+          type: "airport",
+          judgement: "must",
+          area: "Arrival / departure",
+          lat: 38.1759,
+          lng: 13.091,
+          note: "Best airport for this western route. Pick up and return the car here.",
+          day: "Days 1 and 10"
+        },
+        {
+          name: "Palermo historic center",
+          type: "base",
+          judgement: "must",
+          area: "Palermo",
+          lat: 38.1157,
+          lng: 13.3615,
+          note: "One-night food and city hit: Kalsa, Quattro Canti, markets, first dinner.",
+          day: "Days 1-2"
+        },
+        {
+          name: "Ballaro / Capo markets",
+          type: "food",
+          judgement: "must",
+          area: "Palermo",
+          lat: 38.1152,
+          lng: 13.3586,
+          note: "Street-food morning: arancine, panelle, sfincione, cannoli. Go hungry.",
+          day: "Day 2"
+        },
+        {
+          name: "Mondello Beach",
+          type: "beach",
+          judgement: "optional",
+          area: "Palermo",
+          lat: 38.2032,
+          lng: 13.327,
+          note: "Easy Palermo swim. Useful if the group wants beach without a transfer.",
+          day: "Day 2"
+        },
+        {
+          name: "Cefalu",
+          type: "optional",
+          judgement: "optional",
+          area: "East of Palermo",
+          lat: 38.0394,
+          lng: 14.021,
+          note: "Beautiful postcard town, but it pulls the route east. Choose it only if the town matters.",
+          day: "Day 2 option"
+        },
+        {
+          name: "Scopello",
+          type: "base",
+          judgement: "must",
+          area: "Beach base",
+          lat: 38.0704,
+          lng: 12.8194,
+          note: "Best base for Zingaro, Tonnara and a quieter stay during San Vito festival week.",
+          day: "Days 3-6"
+        },
+        {
+          name: "Castellammare del Golfo",
+          type: "base",
+          judgement: "must",
+          area: "Practical base",
+          lat: 38.0265,
+          lng: 12.8818,
+          note: "Less romantic than Scopello, more practical for restaurants, harbor, parking and services.",
+          day: "Days 3-6"
+        },
+        {
+          name: "Tonnara di Scopello",
+          type: "beach",
+          judgement: "must",
+          area: "Scopello",
+          lat: 38.0716,
+          lng: 12.8181,
+          note: "Iconic swim spot. Check paid access and booking rules before promising it.",
+          day: "Day 3"
+        },
+        {
+          name: "Guidaloca Beach",
+          type: "beach",
+          judgement: "optional",
+          area: "Scopello",
+          lat: 38.0574,
+          lng: 12.8346,
+          note: "Easier fallback beach when Tonnara access or crowds become annoying.",
+          day: "Day 3 backup"
+        },
+        {
+          name: "Zingaro South Entrance",
+          type: "attraction",
+          judgement: "must",
+          area: "Reserve",
+          lat: 38.083,
+          lng: 12.805,
+          note: "Start early from the Scopello side for coves and less heat damage.",
+          day: "Day 4"
+        },
+        {
+          name: "Cala Capreria",
+          type: "beach",
+          judgement: "must",
+          area: "Zingaro",
+          lat: 38.0924,
+          lng: 12.7976,
+          note: "Sensible minimum Zingaro cove. Good payoff without turning the day into a march.",
+          day: "Day 4"
+        },
+        {
+          name: "Cala Tonnarella dell'Uzzo",
+          type: "beach",
+          judgement: "optional",
+          area: "Zingaro",
+          lat: 38.1356,
+          lng: 12.7565,
+          note: "Bigger Zingaro push. Worth it if weather, water and group legs agree.",
+          day: "Day 4 stretch"
+        },
+        {
+          name: "San Vito Lo Capo",
+          type: "beach",
+          judgement: "must",
+          area: "Festival / beach",
+          lat: 38.1759,
+          lng: 12.7357,
+          note: "Great sand and Cous Cous Fest atmosphere. Visit strategically; do not sleep here this week.",
+          day: "Day 5"
+        },
+        {
+          name: "Bue Marino / Macari",
+          type: "beach",
+          judgement: "must",
+          area: "Macari",
+          lat: 38.1428,
+          lng: 12.7335,
+          note: "Lower-effort, high-reward coast when San Vito is crowded or windy.",
+          day: "Day 6"
+        },
+        {
+          name: "Baia Santa Margherita",
+          type: "beach",
+          judgement: "optional",
+          area: "Macari",
+          lat: 38.1205,
+          lng: 12.7592,
+          note: "Useful sandy backup near Macari, often easier than fighting San Vito parking.",
+          day: "Day 6 option"
+        },
+        {
+          name: "Segesta",
+          type: "attraction",
+          judgement: "optional",
+          area: "Inland",
+          lat: 37.9413,
+          lng: 12.8346,
+          note: "The one ancient-site option that fits the route. Skip if the trip mood is pure coast.",
+          day: "Day 6 option"
+        },
+        {
+          name: "Erice",
+          type: "attraction",
+          judgement: "optional",
+          area: "Trapani hills",
+          lat: 38.0376,
+          lng: 12.587,
+          note: "Medieval hill town with huge views. Go if visibility is good; skip if cloudy.",
+          day: "Day 7"
+        },
+        {
+          name: "Trapani ferry port",
+          type: "ferry",
+          judgement: "must",
+          area: "Trapani",
+          lat: 38.0159,
+          lng: 12.5137,
+          note: "Practical launch point for Favignana. Sleeping near here makes the island day easiest.",
+          day: "Day 8"
+        },
+        {
+          name: "Trapani old town",
+          type: "food",
+          judgement: "optional",
+          area: "Trapani",
+          lat: 38.0172,
+          lng: 12.5165,
+          note: "Good busiate, seafood and a practical lunch stop between Erice, ferry and Marsala.",
+          day: "Days 7-8"
+        },
+        {
+          name: "Marsala",
+          type: "base",
+          judgement: "must",
+          area: "Final base",
+          lat: 37.7983,
+          lng: 12.4377,
+          note: "Best Dolce Vita finish: wine, salt pans, old town, sunset dinners.",
+          day: "Days 7-10"
+        },
+        {
+          name: "Saline dello Stagnone",
+          type: "attraction",
+          judgement: "must",
+          area: "Marsala lagoon",
+          lat: 37.869,
+          lng: 12.4678,
+          note: "Salt pans and sunset. The kind of low-effort beauty this trip needs.",
+          day: "Days 7 or 9"
+        },
+        {
+          name: "Mozia lagoon",
+          type: "optional",
+          judgement: "optional",
+          area: "Marsala lagoon",
+          lat: 37.864,
+          lng: 12.4718,
+          note: "Gentle culture/boat half-day if the weather or group mood wants something softer.",
+          day: "Day 9 option"
+        },
+        {
+          name: "Cantine Florio",
+          type: "food",
+          judgement: "optional",
+          area: "Marsala",
+          lat: 37.791,
+          lng: 12.437,
+          note: "Classic Marsala wine stop. Book a tasting if Day 9 becomes the slow inland day.",
+          day: "Day 9"
+        },
+        {
+          name: "Favignana port",
+          type: "ferry",
+          judgement: "must",
+          area: "Egadi islands",
+          lat: 37.932,
+          lng: 12.3297,
+          note: "Arrive early, rent e-bikes, ask which side is calm based on wind.",
+          day: "Day 8"
+        },
+        {
+          name: "Cala Rossa",
+          type: "beach",
+          judgement: "must",
+          area: "Favignana",
+          lat: 37.9298,
+          lng: 12.276,
+          note: "The famous blue-water hit. Rocky access, massive payoff.",
+          day: "Day 8"
+        },
+        {
+          name: "Cala Azzurra",
+          type: "beach",
+          judgement: "must",
+          area: "Favignana",
+          lat: 37.9059,
+          lng: 12.3234,
+          note: "Clear-water swim that pairs well with an e-bike loop.",
+          day: "Day 8"
+        },
+        {
+          name: "Scala dei Turchi",
+          type: "optional",
+          judgement: "skip",
+          area: "South coast",
+          lat: 37.289,
+          lng: 13.473,
+          note: "Too far for this western loop and access rules can be awkward. Save it for an Agrigento trip.",
+          day: "Skip"
+        },
+        {
+          name: "Catania / Taormina",
+          type: "optional",
+          judgement: "skip",
+          area: "East Sicily",
+          lat: 37.5079,
+          lng: 15.083,
+          note: "Excellent, wrong trip. Adding the east coast breaks the relaxed beach-food route.",
+          day: "Skip"
+        }
+      ];
+
+      const typeColors = {
+        base: "#103f4f",
+        beach: "#0f7189",
+        attraction: "#64733f",
+        food: "#b4472d",
+        optional: "#d8952d",
+        ferry: "#7b4f9f",
+        airport: "#30343b"
+      };
+
+      const typeLabels = {
+        base: "Base",
+        beach: "Beach",
+        attraction: "Attraction",
+        food: "Food",
+        optional: "Optional",
+        ferry: "Ferry",
+        airport: "Airport"
+      };
+
+      const list = document.querySelector("#stop-list");
+      const buttons = Array.from(document.querySelectorAll("[data-filter]"));
+      let activeFilter = "all";
+      let map;
+      let markerLayer;
+      const markers = new Map();
+
+      function googleMapsSearchUrl(stop) {
+        return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${stop.name} ${stop.area} Sicily`)}`;
+      }
+
+      function matchesFilter(stop, filter) {
+        if (filter === "all") return true;
+        if (filter === "optional") return stop.judgement === "optional" || stop.judgement === "skip" || stop.type === "optional";
+        if (filter === "transport") return stop.type === "ferry" || stop.type === "airport";
+        return stop.type === filter;
+      }
+
+      function renderStopList() {
+        const visibleStops = stops.filter((stop) => matchesFilter(stop, activeFilter));
+        list.innerHTML = visibleStops.length
+          ? visibleStops
+              .map(
+                (stop) => `
+                  <article class="stop-card ${stop.judgement}" data-stop="${stop.name}">
+                    <div class="stop-title-row">
+                      <h3>${stop.name}</h3>
+                      <span class="judgement ${stop.judgement}">${stop.judgement}</span>
+                    </div>
+                    <div class="stop-meta">
+                      <span class="mini-pill">${typeLabels[stop.type] || stop.type}</span>
+                      <span class="mini-pill">${stop.area}</span>
+                      <span class="mini-pill">${stop.day}</span>
+                    </div>
+                    <p>${stop.note}</p>
+                    <div class="actions">
+                      <a class="link-button" href="${googleMapsSearchUrl(stop)}" target="_blank" rel="noreferrer">Open map</a>
+                    </div>
+                  </article>
+                `
+              )
+              .join("")
+          : '<div class="stop-empty">No stops match this filter.</div>';
+      }
+
+      function renderMarkers() {
+        if (!markerLayer) return;
+        markerLayer.clearLayers();
+        markers.clear();
+        const visibleStops = stops.filter((stop) => matchesFilter(stop, activeFilter));
+        visibleStops.forEach((stop) => {
+          const color = typeColors[stop.type] || typeColors.optional;
+          const marker = L.marker([stop.lat, stop.lng], {
+            title: stop.name,
+            icon: L.divIcon({
+              className: "",
+              html: `<span class="stop-marker" style="display:block;background:${color}"></span>`,
+              iconSize: [18, 18],
+              iconAnchor: [9, 9],
+              popupAnchor: [0, -9]
+            })
+          }).bindPopup(
+            `<strong>${stop.name}</strong><span>${typeLabels[stop.type] || stop.type} · ${stop.judgement} · ${stop.day}</span><p>${stop.note}</p>`
+          );
+          marker.addTo(markerLayer);
+          markers.set(stop.name, marker);
+        });
+
+        if (visibleStops.length) {
+          const bounds = L.latLngBounds(visibleStops.map((stop) => [stop.lat, stop.lng]));
+          map.fitBounds(bounds, { padding: [26, 26], maxZoom: activeFilter === "all" ? 9 : 12 });
+        }
+      }
+
+      function setFilter(filter) {
+        activeFilter = filter;
+        buttons.forEach((button) => {
+          button.classList.toggle("is-active", button.dataset.filter === filter);
+        });
+        renderStopList();
+        renderMarkers();
+      }
+
+      function initMap() {
+        const mapEl = document.querySelector("#trip-map");
+        if (!mapEl) return;
+        if (!window.L) {
+          mapEl.innerHTML = '<div class="map-fallback">Interactive map could not load. The stop board below still has every place and Google Maps links.</div>';
+          return;
+        }
+
+        map = L.map(mapEl, {
+          scrollWheelZoom: false,
+          tap: true
+        });
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          maxZoom: 18,
+          attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        markerLayer = L.layerGroup().addTo(map);
+        renderMarkers();
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => setFilter(button.dataset.filter));
+      });
+
+      list.addEventListener("click", (event) => {
+        const card = event.target.closest(".stop-card");
+        if (!card || !map) return;
+        const marker = markers.get(card.dataset.stop);
+        if (marker) {
+          map.setView(marker.getLatLng(), 12);
+          marker.openPopup();
+        }
+      });
+
+      renderStopList();
+      initMap();
+    </script>
   </body>
 </html>
