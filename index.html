@@ -3,23 +3,29 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Western Sicily Trip Plan</title>
+    <title>Western Sicily Trip Plan - September 2026</title>
     <style>
       :root {
-        --ink: #1d2427;
-        --muted: #5c686d;
-        --paper: #fbf8f1;
+        --ink: #172126;
+        --muted: #5e6970;
+        --paper: #f7f2e8;
         --panel: #fffdf8;
-        --line: #ded5c6;
-        --sea: #0f7490;
-        --olive: #5f753d;
-        --tomato: #b94a2f;
-        --sun: #d9982b;
-        --shadow: 0 18px 50px rgba(35, 37, 31, 0.14);
+        --line: #ded4c4;
+        --sea: #0f7189;
+        --deep: #103f4f;
+        --olive: #64733f;
+        --tomato: #b4472d;
+        --sun: #d8952d;
+        --sand: #ead8b5;
+        --shadow: 0 18px 45px rgba(32, 35, 30, 0.12);
       }
 
       * {
         box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
       }
 
       body {
@@ -33,29 +39,31 @@
       }
 
       a {
-        color: inherit;
+        color: var(--deep);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
       }
 
       .shell {
-        width: min(1180px, calc(100% - 32px));
+        width: min(1220px, calc(100% - 32px));
         margin: 0 auto;
       }
 
       .hero {
-        min-height: 92vh;
+        min-height: 88vh;
         display: grid;
         align-items: end;
-        padding: 28px 0 56px;
-        background:
-          linear-gradient(rgba(10, 22, 24, 0.1), rgba(10, 22, 24, 0.58)),
-          url("https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1800&q=80")
-            center / cover;
+        padding: 24px 0 52px;
         color: white;
+        background:
+          linear-gradient(rgba(9, 22, 26, 0.14), rgba(9, 22, 26, 0.68)),
+          url("https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1900&q=82")
+            center / cover;
       }
 
       .nav {
         position: absolute;
-        top: 22px;
+        top: 20px;
         left: 0;
         right: 0;
       }
@@ -68,42 +76,45 @@
       }
 
       .brand {
-        font-weight: 800;
-        letter-spacing: 0;
-        font-size: clamp(1rem, 2vw, 1.15rem);
+        font-weight: 900;
       }
 
       .nav-links {
         display: flex;
-        gap: 10px;
         flex-wrap: wrap;
+        gap: 8px;
       }
 
-      .nav-links a {
+      .nav-links a,
+      .button {
         min-height: 36px;
         display: inline-flex;
         align-items: center;
+        justify-content: center;
         padding: 0 12px;
-        border: 1px solid rgba(255, 255, 255, 0.36);
+        border: 1px solid rgba(255, 255, 255, 0.34);
         border-radius: 999px;
+        color: white;
+        background: rgba(0, 0, 0, 0.18);
         text-decoration: none;
         font-size: 0.88rem;
-        background: rgba(0, 0, 0, 0.16);
+        font-weight: 750;
         backdrop-filter: blur(10px);
       }
 
       .hero-copy {
-        width: min(760px, 100%);
-        padding-top: 120px;
+        width: min(820px, calc(100% - 32px));
+        padding-top: 116px;
       }
 
-      .kicker {
+      .kicker,
+      .eyebrow {
         display: inline-flex;
         align-items: center;
         gap: 8px;
-        margin-bottom: 18px;
-        font-size: 0.82rem;
-        font-weight: 800;
+        margin-bottom: 16px;
+        font-size: 0.8rem;
+        font-weight: 900;
         text-transform: uppercase;
       }
 
@@ -116,37 +127,37 @@
 
       h1 {
         margin: 0;
-        font-size: clamp(3rem, 10vw, 8.5rem);
+        font-size: clamp(3rem, 9vw, 7.6rem);
         line-height: 0.9;
         letter-spacing: 0;
       }
 
       .hero-copy p {
-        width: min(680px, 100%);
+        width: min(720px, 100%);
         margin: 22px 0 0;
-        font-size: clamp(1.05rem, 2vw, 1.35rem);
-        color: rgba(255, 255, 255, 0.88);
+        color: rgba(255, 255, 255, 0.9);
+        font-size: clamp(1.04rem, 2vw, 1.32rem);
       }
 
       .hero-stats {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(5, minmax(0, 1fr));
         gap: 10px;
-        margin-top: 32px;
+        margin-top: 30px;
       }
 
       .stat {
-        min-height: 92px;
-        padding: 16px;
+        min-height: 94px;
+        padding: 15px;
         border: 1px solid rgba(255, 255, 255, 0.28);
         border-radius: 8px;
-        background: rgba(0, 0, 0, 0.22);
-        backdrop-filter: blur(14px);
+        background: rgba(0, 0, 0, 0.24);
+        backdrop-filter: blur(12px);
       }
 
       .stat strong {
         display: block;
-        font-size: clamp(1.3rem, 3vw, 2rem);
+        font-size: clamp(1.24rem, 2.5vw, 1.9rem);
         line-height: 1;
       }
 
@@ -154,15 +165,15 @@
         display: block;
         margin-top: 8px;
         color: rgba(255, 255, 255, 0.78);
-        font-size: 0.9rem;
+        font-size: 0.88rem;
       }
 
       main {
-        padding: 28px 0 70px;
+        padding: 34px 0 76px;
       }
 
       .section {
-        padding: 48px 0;
+        padding: 46px 0;
       }
 
       .section-head {
@@ -175,232 +186,285 @@
 
       h2 {
         margin: 0;
-        font-size: clamp(1.75rem, 4vw, 3.4rem);
+        font-size: clamp(1.8rem, 4vw, 3.35rem);
         line-height: 1;
         letter-spacing: 0;
       }
 
+      h3 {
+        margin: 0 0 8px;
+        font-size: 1.14rem;
+      }
+
+      h4 {
+        margin: 0 0 6px;
+        font-size: 0.98rem;
+      }
+
+      p {
+        margin-top: 0;
+      }
+
       .section-head p,
-      .note p,
-      .card p {
+      .muted,
+      .card p,
+      .timeline p,
+      .fineprint {
         color: var(--muted);
       }
 
       .section-head p {
-        width: min(460px, 100%);
+        width: min(520px, 100%);
         margin: 0;
       }
 
-      .route-grid {
+      .grid-2 {
         display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
+        grid-template-columns: 1fr 1fr;
         gap: 18px;
       }
 
-      .map-panel,
-      .note,
+      .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .grid-4 {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .panel,
       .card,
       .day,
-      .checklist {
+      .map-card,
+      .hotel,
+      .food-card,
+      .checklist,
+      .warning {
         border: 1px solid var(--line);
         border-radius: 8px;
         background: var(--panel);
         box-shadow: var(--shadow);
       }
 
-      .map-panel {
-        position: relative;
-        min-height: 500px;
-        overflow: hidden;
-        padding: 24px;
-        background:
-          linear-gradient(135deg, rgba(15, 116, 144, 0.18), rgba(217, 152, 43, 0.14)),
-          #eef3ee;
+      .panel,
+      .card,
+      .day,
+      .hotel,
+      .food-card,
+      .checklist,
+      .warning {
+        padding: 20px;
       }
 
-      .coast {
-        position: absolute;
-        inset: 52px 42px;
-        border: 3px solid rgba(15, 116, 144, 0.26);
-        border-radius: 48% 52% 46% 54%;
-        transform: rotate(-12deg);
+      .warning {
+        border-color: rgba(180, 71, 45, 0.28);
+        background: #fff8f2;
       }
 
-      .route-line {
-        position: absolute;
-        left: 18%;
-        top: 29%;
-        width: 58%;
-        height: 42%;
-        border-top: 4px solid var(--tomato);
-        border-right: 4px solid var(--tomato);
-        border-radius: 0 80px 0 0;
-        transform: rotate(9deg);
-      }
-
-      .pin {
-        position: absolute;
-        width: 168px;
-        padding: 12px;
-        border-radius: 8px;
-        background: rgba(255, 253, 248, 0.93);
-        border: 1px solid rgba(29, 36, 39, 0.12);
-      }
-
-      .pin::before {
-        content: "";
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        margin-right: 6px;
-        border-radius: 50%;
-        background: var(--tomato);
-      }
-
-      .pin strong {
-        font-size: 0.95rem;
-      }
-
-      .pin span {
-        display: block;
-        margin-top: 4px;
-        color: var(--muted);
-        font-size: 0.82rem;
-      }
-
-      .pin-palermo {
-        left: 12%;
-        top: 20%;
-      }
-
-      .pin-scopello {
-        left: 36%;
-        top: 41%;
-      }
-
-      .pin-trapani {
-        right: 11%;
-        bottom: 22%;
-      }
-
-      .note {
-        padding: 24px;
-      }
-
-      .note h3,
-      .card h3,
-      .day h3,
-      .checklist h3 {
-        margin: 0 0 10px;
-        font-size: 1.15rem;
-      }
-
-      .note strong {
+      .warning strong {
         color: var(--tomato);
-      }
-
-      .base-list {
-        display: grid;
-        gap: 12px;
-        margin-top: 18px;
-      }
-
-      .base {
-        padding: 14px;
-        border-radius: 8px;
-        background: rgba(15, 116, 144, 0.08);
-      }
-
-      .base b {
-        display: block;
-      }
-
-      .base span {
-        color: var(--muted);
-        font-size: 0.92rem;
-      }
-
-      .cards {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 16px;
-      }
-
-      .card {
-        overflow: hidden;
-      }
-
-      .card img {
-        display: block;
-        width: 100%;
-        aspect-ratio: 4 / 3;
-        object-fit: cover;
-      }
-
-      .card-body {
-        padding: 18px;
       }
 
       .tag {
         display: inline-flex;
         min-height: 28px;
         align-items: center;
-        margin-bottom: 12px;
+        margin-bottom: 11px;
         padding: 0 10px;
         border-radius: 999px;
-        background: rgba(95, 117, 61, 0.12);
-        color: var(--olive);
-        font-size: 0.78rem;
-        font-weight: 800;
+        color: var(--deep);
+        background: rgba(15, 113, 137, 0.1);
+        font-size: 0.75rem;
+        font-weight: 900;
         text-transform: uppercase;
       }
 
-      .days {
+      .tag.hot {
+        color: var(--tomato);
+        background: rgba(180, 71, 45, 0.1);
+      }
+
+      .route-layout {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 14px;
+        grid-template-columns: 1.15fr 0.85fr;
+        gap: 18px;
       }
 
-      .day {
-        padding: 18px;
+      .map-card {
+        overflow: hidden;
       }
 
-      .day-num {
-        display: inline-flex;
-        width: 36px;
-        height: 36px;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 12px;
+      .map-card iframe {
+        display: block;
+        width: 100%;
+        min-height: 520px;
+        border: 0;
+      }
+
+      .route-list {
+        display: grid;
+        gap: 12px;
+      }
+
+      .route-step {
+        display: grid;
+        grid-template-columns: 38px 1fr;
+        gap: 12px;
+        align-items: start;
+        padding: 14px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.5);
+      }
+
+      .badge {
+        width: 38px;
+        height: 38px;
+        display: inline-grid;
+        place-items: center;
         border-radius: 50%;
-        background: var(--sea);
         color: white;
+        background: var(--sea);
         font-weight: 900;
       }
 
-      .day p {
+      .route-step p {
         margin: 0;
         color: var(--muted);
       }
 
-      .split {
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .link-button {
+        min-height: 34px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 10px;
+        border-radius: 999px;
+        color: var(--deep);
+        background: rgba(15, 113, 137, 0.1);
+        text-decoration: none;
+        font-size: 0.84rem;
+        font-weight: 800;
+      }
+
+      .timeline {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 18px;
+        gap: 14px;
       }
 
-      .checklist {
-        padding: 22px;
+      .day {
+        display: grid;
+        grid-template-columns: 82px 1fr;
+        gap: 16px;
       }
 
-      .checklist ol,
-      .checklist ul {
-        margin: 12px 0 0;
+      .date-pill {
+        width: 82px;
+        min-height: 82px;
+        display: grid;
+        place-items: center;
+        align-content: center;
+        border-radius: 8px;
+        color: white;
+        background: var(--deep);
+        text-align: center;
+        font-weight: 900;
+      }
+
+      .date-pill span {
+        display: block;
+        font-size: 0.74rem;
+        color: rgba(255, 255, 255, 0.76);
+      }
+
+      .day-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .slot {
+        padding: 12px;
+        border-radius: 8px;
+        background: rgba(234, 216, 181, 0.42);
+      }
+
+      .slot b {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 0.8rem;
+        text-transform: uppercase;
+      }
+
+      .slot p {
+        margin: 0;
+        color: var(--ink);
+        font-size: 0.92rem;
+      }
+
+      .hotel,
+      .food-card {
+        display: grid;
+        gap: 8px;
+      }
+
+      .hotel ul,
+      .food-card ul,
+      .checklist ul,
+      .checklist ol {
+        margin: 8px 0 0;
         padding-left: 20px;
       }
 
-      .checklist li {
-        margin: 10px 0;
+      li {
+        margin: 7px 0;
+      }
+
+      .beach-card {
+        min-height: 220px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        overflow: hidden;
+        padding: 18px;
+        border-radius: 8px;
+        color: white;
+        background:
+          linear-gradient(rgba(5, 22, 27, 0.08), rgba(5, 22, 27, 0.78)),
+          var(--sea);
+        background-position: center;
+        background-size: cover;
+        box-shadow: var(--shadow);
+      }
+
+      .beach-card p {
+        margin: 8px 0 0;
+        color: rgba(255, 255, 255, 0.84);
+      }
+
+      .flight-box {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+      }
+
+      .flight-box .panel {
+        box-shadow: none;
+      }
+
+      .sources {
+        font-size: 0.9rem;
       }
 
       .footer {
@@ -409,10 +473,10 @@
         text-align: center;
       }
 
-      @media (max-width: 860px) {
+      @media (max-width: 930px) {
         .nav {
           position: static;
-          padding-top: 16px;
+          padding-top: 14px;
         }
 
         .hero {
@@ -421,7 +485,18 @@
         }
 
         .hero-copy {
-          padding-top: 58px;
+          padding-top: 50px;
+        }
+
+        h1 {
+          max-width: 100%;
+          font-size: clamp(2.35rem, 13vw, 3.35rem);
+          line-height: 0.96;
+          overflow-wrap: anywhere;
+        }
+
+        .hero-copy p {
+          font-size: 1rem;
         }
 
         .nav-inner,
@@ -431,31 +506,29 @@
         }
 
         .hero-stats,
-        .cards,
-        .days,
-        .split,
-        .route-grid {
+        .grid-2,
+        .grid-3,
+        .grid-4,
+        .route-layout,
+        .flight-box,
+        .day-grid {
           grid-template-columns: 1fr;
         }
 
-        .map-panel {
-          min-height: 560px;
+        .day {
+          grid-template-columns: 1fr;
         }
 
-        .pin {
-          width: 150px;
+        .date-pill {
+          width: 100%;
+          min-height: 54px;
+          display: flex;
+          justify-content: space-between;
+          padding: 0 14px;
         }
 
-        .pin-palermo {
-          left: 8%;
-        }
-
-        .pin-scopello {
-          left: 26%;
-        }
-
-        .pin-trapani {
-          right: 8%;
+        .map-card iframe {
+          min-height: 420px;
         }
       }
     </style>
@@ -464,29 +537,31 @@
     <header class="hero">
       <nav class="nav">
         <div class="shell nav-inner">
-          <div class="brand">Western Sicily</div>
+          <div class="brand">Marcin's Western Sicily Plan</div>
           <div class="nav-links" aria-label="Page navigation">
             <a href="#route">Route</a>
-            <a href="#bases">Bases</a>
-            <a href="#itinerary">Days</a>
+            <a href="#days">Days</a>
+            <a href="#stays">Hotels</a>
+            <a href="#food">Food</a>
             <a href="#booking">Book</a>
           </div>
         </div>
       </nav>
 
       <div class="shell hero-copy">
-        <div class="kicker"><span class="dot"></span> 19-28 September 2026</div>
-        <h1>Sicily Trip Plan</h1>
+        <div class="kicker"><span class="dot"></span> Draft plan checked 29 May 2026</div>
+        <h1>Sicily, but lazy in the correct places.</h1>
         <p>
-          Fly Berlin to Palermo, rent a car, keep it to three bases, and spend
-          the trip on beaches, food, islands, sunsets, and exactly zero needless
-          logistics gymnastics.
+          9 nights around 19-28 September 2026 for 4 people. Berlin to Palermo,
+          rental car, three bases, beaches first, food always, and no performative
+          island-crossing nonsense.
         </p>
         <div class="hero-stats" aria-label="Trip summary">
-          <div class="stat"><strong>9</strong><span>nights</span></div>
-          <div class="stat"><strong>3</strong><span>bases max</span></div>
-          <div class="stat"><strong>PMO</strong><span>Palermo in/out</span></div>
-          <div class="stat"><strong>Car</strong><span>pick up at airport</span></div>
+          <div class="stat"><strong>19-28 Sep</strong><span>best date shape</span></div>
+          <div class="stat"><strong>BER-PMO</strong><span>target flights</span></div>
+          <div class="stat"><strong>3 bases</strong><span>Palermo, Scopello, Marsala</span></div>
+          <div class="stat"><strong>~520 km</strong><span>total relaxed driving</span></div>
+          <div class="stat"><strong>4 people</strong><span>book early for September</span></div>
         </div>
       </div>
     </header>
@@ -495,177 +570,454 @@
       <section class="section" id="route">
         <div class="shell">
           <div class="section-head">
-            <h2>The Route</h2>
+            <h2>Route Verdict</h2>
             <p>
-              The good version is western Sicily: Palermo, Scopello or
-              Castellammare, then Trapani, Marsala, or Favignana.
+              Western Sicily wins because it stacks the best beaches, Palermo food,
+              Zingaro, San Vito, Favignana, salt pans, and Marsala without wasting
+              half the trip behind a steering wheel.
             </p>
           </div>
 
-          <div class="route-grid">
-            <div class="map-panel" aria-label="Stylized map of the Sicily route">
-              <div class="coast"></div>
-              <div class="route-line"></div>
-              <div class="pin pin-palermo">
-                <strong>Palermo / Cefalu</strong>
-                <span>1-2 nights. Arrival, markets, food, sea reset.</span>
-              </div>
-              <div class="pin pin-scopello">
-                <strong>Scopello / Castellammare</strong>
-                <span>4 nights. Best base for beaches and Zingaro.</span>
-              </div>
-              <div class="pin pin-trapani">
-                <strong>Trapani / Marsala</strong>
-                <span>3-4 nights. Favignana, salt pans, wine, sunset dinners.</span>
-              </div>
+          <div class="route-layout">
+            <div class="map-card">
+              <iframe
+                title="Google map of the western Sicily route"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                src="https://www.google.com/maps?q=Palermo%20Scopello%20San%20Vito%20Lo%20Capo%20Trapani%20Marsala%20Favignana%20Sicily&output=embed"
+              ></iframe>
             </div>
 
-            <aside class="note">
-              <h3>Important call</h3>
-              <p>
-                <strong>Do not sleep in San Vito Lo Capo</strong> during these
-                dates. Cous Cous Fest runs 18-27 September 2026. Go one evening
-                for food and atmosphere, then sleep elsewhere where parking and
-                prices are less stupid.
+            <aside class="panel">
+              <span class="tag hot">Main trap</span>
+              <h3>Cous Cous Fest overlap</h3>
+              <p class="muted">
+                San Vito Lo Capo hosts Cous Cous Fest from 18-27 September 2026.
+                That is perfect for one evening of food and atmosphere, and bad
+                for sleeping there: crowds, parking, and prices. Stay in Scopello
+                or Castellammare instead, then visit San Vito strategically.
               </p>
-              <div class="base-list">
-                <div class="base">
-                  <b>Airport</b>
-                  <span>Berlin BER to Palermo PMO is the right pairing.</span>
+              <div class="route-list">
+                <div class="route-step">
+                  <span class="badge">1</span>
+                  <div>
+                    <h4>Palermo or Cefalu - 1 night</h4>
+                    <p>Arrival, markets, first dinner, light city hit.</p>
+                  </div>
                 </div>
-                <div class="base">
-                  <b>Fallback</b>
-                  <span>Catania works only if Palermo flights become painful.</span>
+                <div class="route-step">
+                  <span class="badge">2</span>
+                  <div>
+                    <h4>Scopello / Castellammare - 4 nights</h4>
+                    <p>Zingaro, Tonnara, San Vito, Macari, beach days.</p>
+                  </div>
                 </div>
-                <div class="base">
-                  <b>Tempo</b>
-                  <span>Three bases keeps the trip relaxed instead of turning it into a spreadsheet.</span>
+                <div class="route-step">
+                  <span class="badge">3</span>
+                  <div>
+                    <h4>Marsala / Trapani / Favignana - 4 nights</h4>
+                    <p>Egadi islands, salt pans, seafood, wine, sunsets.</p>
+                  </div>
                 </div>
+              </div>
+              <div class="actions">
+                <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Palermo%20Airport&destination=Palermo&travelmode=driving" target="_blank" rel="noreferrer">PMO to Palermo</a>
+                <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Palermo&destination=Scopello%20Sicily&travelmode=driving" target="_blank" rel="noreferrer">Palermo to Scopello</a>
+                <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Scopello%20Sicily&destination=Marsala&waypoints=Trapani&travelmode=driving" target="_blank" rel="noreferrer">Scopello to Marsala</a>
+                <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Marsala&destination=Palermo%20Airport&travelmode=driving" target="_blank" rel="noreferrer">Marsala to PMO</a>
               </div>
             </aside>
           </div>
         </div>
       </section>
 
-      <section class="section" id="bases">
+      <section class="section" id="flights">
         <div class="shell">
           <div class="section-head">
-            <h2>Where To Stay</h2>
+            <h2>Flight And Car Plan</h2>
             <p>
-              Book the middle base first. The festival overlap will pressure the
-              whole San Vito and Scopello area.
+              Treat prices as a snapshot, not gospel. Airlines are tiny chaos
+              machines wearing logos.
             </p>
           </div>
 
-          <div class="cards">
-            <article class="card">
-              <img
-                src="https://images.unsplash.com/photo-1567602846078-3b60e2f73a8f?auto=format&fit=crop&w=900&q=80"
-                alt="Historic street in Palermo"
-              />
-              <div class="card-body">
-                <span class="tag">Start</span>
-                <h3>Palermo or Cefalu</h3>
-                <p>
-                  One night is enough unless you want city chaos. Do markets,
-                  seafood, street food, and a gentle first swim.
-                </p>
+          <div class="flight-box">
+            <div class="panel">
+              <span class="tag">Best target</span>
+              <h3>Berlin BER to Palermo PMO</h3>
+              <ul>
+                <li>Best date shape: <strong>Sat 19 Sep to Mon 28 Sep 2026</strong>.</li>
+                <li>Earlier live Ryanair check showed basic fares around <strong>EUR 82 pp outbound</strong> and <strong>EUR 160 pp return</strong>, before bags/seats/fees.</li>
+                <li>For 4 people: expect the real total to jump after cabin bags, checked bags, seats, and payment extras.</li>
+                <li>Use Palermo in/out unless Catania is dramatically cheaper. Catania makes this western route worse.</li>
+              </ul>
+              <div class="actions">
+                <a class="link-button" href="https://www.ryanair.com/" target="_blank" rel="noreferrer">Check Ryanair</a>
+                <a class="link-button" href="https://www.eurowings.com/" target="_blank" rel="noreferrer">Check Eurowings</a>
+                <a class="link-button" href="https://www.google.com/travel/flights" target="_blank" rel="noreferrer">Check Google Flights</a>
+              </div>
+            </div>
+
+            <div class="panel">
+              <span class="tag">Car</span>
+              <h3>Rent at Palermo airport</h3>
+              <ul>
+                <li>Book a compact SUV or comfortable hatchback for 4 people plus luggage.</li>
+                <li>Automatic if anyone hates Sicilian hill starts. No hero points for a cheap manual.</li>
+                <li>Parking matters: choose hotels with parking or clear nearby paid parking.</li>
+                <li>Keep driving windows short: the plan avoids the Palermo to Catania axis entirely.</li>
+              </ul>
+              <div class="actions">
+                <a class="link-button" href="https://www.google.com/maps/search/car+rental+Palermo+Airport/" target="_blank" rel="noreferrer">Rental desks map</a>
+                <a class="link-button" href="https://www.google.com/maps/search/parking+Palermo+historic+center/" target="_blank" rel="noreferrer">Palermo parking</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="days">
+        <div class="shell">
+          <div class="section-head">
+            <h2>10 Day Detailed Plan</h2>
+            <p>
+              This is the version I would actually book: one city night, four
+              beach-core nights, four sunset/island nights.
+            </p>
+          </div>
+
+          <div class="timeline">
+            <article class="day">
+              <div class="date-pill">Day 1<span>Sat 19 Sep</span></div>
+              <div>
+                <h3>Arrive Palermo, eat immediately</h3>
+                <p>Land at PMO, pick up the car, check into Palermo. Keep the first day short because airports are where optimism goes to die.</p>
+                <div class="day-grid">
+                  <div class="slot"><b>Morning</b><p>Fly BER to PMO. Pick up car at airport.</p></div>
+                  <div class="slot"><b>Afternoon</b><p>Check in. Walk Quattro Canti, Piazza Pretoria, Via Maqueda.</p></div>
+                  <div class="slot"><b>Evening</b><p>Dinner around Vucciria/Kalsa. Try arancine, panelle, sfincione.</p></div>
+                </div>
+                <div class="actions">
+                  <a class="link-button" href="https://www.google.com/maps/search/hotels+Palermo+historic+center+parking/" target="_blank" rel="noreferrer">Palermo hotel map</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Antica+Focacceria+San+Francesco+Palermo/" target="_blank" rel="noreferrer">Antica Focacceria</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Nni+Franco+U+Vastiddaru+Palermo/" target="_blank" rel="noreferrer">Nni Franco</a>
+                </div>
               </div>
             </article>
 
-            <article class="card">
-              <img
-                src="https://images.unsplash.com/photo-1606220838315-056192d5e927?auto=format&fit=crop&w=900&q=80"
-                alt="Rocky Mediterranean coastline"
-              />
-              <div class="card-body">
-                <span class="tag">Main base</span>
-                <h3>Scopello / Castellammare</h3>
-                <p>
-                  The best center of gravity for Zingaro Reserve, Tonnara di
-                  Scopello, San Vito, Macari, and slow beach days.
-                </p>
+            <article class="day">
+              <div class="date-pill">Day 2<span>Sun 20 Sep</span></div>
+              <div>
+                <h3>Palermo morning, Mondello or Cefalu swim</h3>
+                <p>Choose one: city food plus Mondello for easy beach, or drive to Cefalu for postcard Sicily and dinner by the sea.</p>
+                <div class="day-grid">
+                  <div class="slot"><b>Morning</b><p>Ballaro or Capo market. Coffee, cannoli, street food reconnaissance.</p></div>
+                  <div class="slot"><b>Afternoon</b><p>Swim at Mondello, or drive ~1h to Cefalu beach.</p></div>
+                  <div class="slot"><b>Evening</b><p>Sleep Palermo for less moving, or Cefalu if you want pretty seaside immediately.</p></div>
+                </div>
+                <div class="actions">
+                  <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Palermo&destination=Mondello%20Beach&travelmode=driving" target="_blank" rel="noreferrer">Palermo to Mondello</a>
+                  <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Palermo&destination=Cefalu&travelmode=driving" target="_blank" rel="noreferrer">Palermo to Cefalu</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Bisso+Bistrot+Palermo/" target="_blank" rel="noreferrer">Bisso Bistrot</a>
+                </div>
               </div>
             </article>
 
-            <article class="card">
-              <img
-                src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80"
-                alt="Blue beach water"
-              />
-              <div class="card-body">
-                <span class="tag">Finish</span>
-                <h3>Trapani / Marsala / Favignana</h3>
-                <p>
-                  Pick this for Egadi islands, tuna, salt pans, Marsala wine, and
-                  the proper blue-water ending.
-                </p>
+            <article class="day">
+              <div class="date-pill">Day 3<span>Mon 21 Sep</span></div>
+              <div>
+                <h3>Move to Scopello / Castellammare</h3>
+                <p>Drive west and switch into beach mode. This is the main base, so pick the hotel carefully.</p>
+                <div class="day-grid">
+                  <div class="slot"><b>Morning</b><p>Drive Palermo to Scopello, roughly 1h20 without drama.</p></div>
+                  <div class="slot"><b>Afternoon</b><p>Tonnara di Scopello swim if access/tickets work. Backup: Guidaloca beach.</p></div>
+                  <div class="slot"><b>Evening</b><p>Dinner in Scopello village or Castellammare harbor.</p></div>
+                </div>
+                <div class="actions">
+                  <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Palermo&destination=Scopello%20Sicily&travelmode=driving" target="_blank" rel="noreferrer">Drive route</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Tonnara+di+Scopello/" target="_blank" rel="noreferrer">Tonnara map</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Ristorante+La+Tavernetta+Scopello/" target="_blank" rel="noreferrer">La Tavernetta</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="day">
+              <div class="date-pill">Day 4<span>Tue 22 Sep</span></div>
+              <div>
+                <h3>Zingaro Reserve beach hike</h3>
+                <p>The prettiest day if everyone can handle walking in the sun. Start early. Bring water, shoes, hats, and no delusions.</p>
+                <div class="day-grid">
+                  <div class="slot"><b>Morning</b><p>Enter from Scopello side. Walk to Cala Capreria first.</p></div>
+                  <div class="slot"><b>Afternoon</b><p>Continue to Cala dell'Uzzo or Cala Tonnarella dell'Uzzo if heat is manageable.</p></div>
+                  <div class="slot"><b>Evening</b><p>Low-effort dinner. Everyone will be salty and pleased.</p></div>
+                </div>
+                <div class="actions">
+                  <a class="link-button" href="https://www.google.com/maps/search/Riserva+dello+Zingaro+Ingresso+Sud/" target="_blank" rel="noreferrer">South entrance</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Cala+Tonnarella+dell'Uzzo/" target="_blank" rel="noreferrer">Cala dell'Uzzo</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Cala+Capreria/" target="_blank" rel="noreferrer">Cala Capreria</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="day">
+              <div class="date-pill">Day 5<span>Wed 23 Sep</span></div>
+              <div>
+                <h3>San Vito beach + Cous Cous Fest evening</h3>
+                <p>Use the festival, do not let the festival use you. Arrive before parking becomes a sport.</p>
+                <div class="day-grid">
+                  <div class="slot"><b>Morning</b><p>Drive to San Vito Lo Capo beach, roughly 45-60 min from Scopello.</p></div>
+                  <div class="slot"><b>Afternoon</b><p>Beach time. If too crowded, pivot to Macari/Bue Marino.</p></div>
+                  <div class="slot"><b>Evening</b><p>Cous Cous Fest dinner, then drive back to your quieter base.</p></div>
+                </div>
+                <div class="actions">
+                  <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Scopello%20Sicily&destination=San%20Vito%20Lo%20Capo&travelmode=driving" target="_blank" rel="noreferrer">Scopello to San Vito</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Cous+Cous+Fest+San+Vito+Lo+Capo/" target="_blank" rel="noreferrer">Festival map</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Bue+Marino+Macari/" target="_blank" rel="noreferrer">Bue Marino backup</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="day">
+              <div class="date-pill">Day 6<span>Thu 24 Sep</span></div>
+              <div>
+                <h3>Macari, Bue Marino, slow lunch</h3>
+                <p>This is the protected lazy day. No museums, no long transfers, no fake productivity. Swim, eat, sunset.</p>
+                <div class="day-grid">
+                  <div class="slot"><b>Morning</b><p>Sleep in. Coffee. Short drive to Macari coastline.</p></div>
+                  <div class="slot"><b>Afternoon</b><p>Bue Marino rocks or Baia Santa Margherita shuttle beaches.</p></div>
+                  <div class="slot"><b>Evening</b><p>Sunset viewpoint, dinner in Castellammare.</p></div>
+                </div>
+                <div class="actions">
+                  <a class="link-button" href="https://www.google.com/maps/search/Baia+Santa+Margherita+Macari/" target="_blank" rel="noreferrer">Baia Santa Margherita</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/La+Cambusa+Castellammare+del+Golfo/" target="_blank" rel="noreferrer">La Cambusa</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Egesta+Mare+Castellammare+del+Golfo/" target="_blank" rel="noreferrer">Egesta Mare</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="day">
+              <div class="date-pill">Day 7<span>Fri 25 Sep</span></div>
+              <div>
+                <h3>Move to Marsala via Erice and Trapani</h3>
+                <p>This is the one proper road-trip day. Start Scopello, stop Erice if skies are clear, then settle near Marsala or Trapani.</p>
+                <div class="day-grid">
+                  <div class="slot"><b>Morning</b><p>Drive to Erice, medieval hill town above Trapani.</p></div>
+                  <div class="slot"><b>Afternoon</b><p>Lunch in Trapani, check into Marsala/Trapani base.</p></div>
+                  <div class="slot"><b>Evening</b><p>Salt pans sunset at Stagnone or Nubia.</p></div>
+                </div>
+                <div class="actions">
+                  <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Scopello%20Sicily&destination=Marsala&waypoints=Erice%7CTrapani&travelmode=driving" target="_blank" rel="noreferrer">Full road day</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Erice+Sicily/" target="_blank" rel="noreferrer">Erice</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Saline+dello+Stagnone+Marsala/" target="_blank" rel="noreferrer">Salt pans</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="day">
+              <div class="date-pill">Day 8<span>Sat 26 Sep</span></div>
+              <div>
+                <h3>Favignana blue-water day</h3>
+                <p>Ferry from Trapani, rent e-bikes, swim the greatest hits. This is the money day.</p>
+                <div class="day-grid">
+                  <div class="slot"><b>Morning</b><p>Hydrofoil Trapani to Favignana, roughly 30-40 min. Rent e-bikes.</p></div>
+                  <div class="slot"><b>Afternoon</b><p>Cala Rossa, Cala Azzurra, Bue Marino. Pick based on wind.</p></div>
+                  <div class="slot"><b>Evening</b><p>Tuna dinner, ferry back, or sleep on Favignana if you choose island mode.</p></div>
+                </div>
+                <div class="actions">
+                  <a class="link-button" href="https://www.google.com/maps/search/Trapani+ferry+terminal+Favignana/" target="_blank" rel="noreferrer">Trapani ferry</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Cala+Rossa+Favignana/" target="_blank" rel="noreferrer">Cala Rossa</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Cala+Azzurra+Favignana/" target="_blank" rel="noreferrer">Cala Azzurra</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="day">
+              <div class="date-pill">Day 9<span>Sun 27 Sep</span></div>
+              <div>
+                <h3>Marsala wine, salt lagoon, or second island hit</h3>
+                <p>Flexible buffer day. Use it for weather, energy, or whichever beach everyone keeps talking about.</p>
+                <div class="day-grid">
+                  <div class="slot"><b>Morning</b><p>Marsala old town, coffee, pastry, light walk.</p></div>
+                  <div class="slot"><b>Afternoon</b><p>Wine tasting, Mozia lagoon boat, or repeat Favignana if the group is obsessed.</p></div>
+                  <div class="slot"><b>Evening</b><p>Final long dinner. Marsala seafood and wine, no rush.</p></div>
+                </div>
+                <div class="actions">
+                  <a class="link-button" href="https://www.google.com/maps/search/Cantine+Florio+Marsala/" target="_blank" rel="noreferrer">Cantine Florio</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Mozia+Marsala/" target="_blank" rel="noreferrer">Mozia lagoon</a>
+                  <a class="link-button" href="https://www.google.com/maps/search/Le+Lumie+Marsala/" target="_blank" rel="noreferrer">Le Lumie</a>
+                </div>
+              </div>
+            </article>
+
+            <article class="day">
+              <div class="date-pill">Day 10<span>Mon 28 Sep</span></div>
+              <div>
+                <h3>Return to Palermo airport</h3>
+                <p>Drive Marsala to PMO, roughly 1h40-2h depending on traffic. Leave buffer for fuel, car return, and airport nonsense.</p>
+                <div class="day-grid">
+                  <div class="slot"><b>Morning</b><p>Pack, coffee, checkout.</p></div>
+                  <div class="slot"><b>Afternoon</b><p>Drive to PMO, return car, fly home.</p></div>
+                  <div class="slot"><b>Evening</b><p>Berlin. Start pretending you will cook Sicilian food at home.</p></div>
+                </div>
+                <div class="actions">
+                  <a class="link-button" href="https://www.google.com/maps/dir/?api=1&origin=Marsala&destination=Palermo%20Airport&travelmode=driving" target="_blank" rel="noreferrer">Marsala to PMO</a>
+                </div>
               </div>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="section" id="itinerary">
+      <section class="section" id="stays">
         <div class="shell">
           <div class="section-head">
-            <h2>Day Sketch</h2>
+            <h2>Hotel Shortlist</h2>
             <p>
-              The route has structure, but leaves room to be lazy. Sicily rewards
-              appetite and timing more than heroic sightseeing.
+              These are candidate areas and hotel searches to check, not final
+              bookings. Prioritize parking, cancellation terms, breakfast, and
+              rooms that work for 4 people.
             </p>
           </div>
 
-          <div class="days">
-            <article class="day">
-              <span class="day-num">1</span>
-              <h3>Arrive in Palermo</h3>
-              <p>Pick up the car, check in, eat street food, keep the evening easy.</p>
+          <div class="grid-3">
+            <article class="hotel">
+              <span class="tag">1 night</span>
+              <h3>Palermo center</h3>
+              <p class="muted">Best for the first night if arrival is afternoon/evening. Stay central; do not optimize for a beach on arrival day.</p>
+              <ul>
+                <li>Look near Kalsa, Quattro Canti, Politeama, or Via Maqueda.</li>
+                <li>Parking plan required: hotel garage or paid lot nearby.</li>
+                <li>Candidates to compare: Palazzo Natoli, Casa Nostra Boutique, Alma Hotel, Hotel Politeama.</li>
+              </ul>
+              <div class="actions">
+                <a class="link-button" href="https://www.google.com/maps/search/Palazzo+Natoli+Palermo/" target="_blank" rel="noreferrer">Palazzo Natoli</a>
+                <a class="link-button" href="https://www.google.com/maps/search/Casa+Nostra+Boutique+Hotel+Palermo/" target="_blank" rel="noreferrer">Casa Nostra</a>
+              </div>
             </article>
-            <article class="day">
-              <span class="day-num">2</span>
-              <h3>Palermo, Mondello, or Cefalu</h3>
-              <p>Markets in the morning, sea in the afternoon, then sleep Palermo or Cefalu.</p>
+
+            <article class="hotel">
+              <span class="tag hot">Book first</span>
+              <h3>Scopello / Castellammare</h3>
+              <p class="muted">This is the constrained base because your dates overlap San Vito festival traffic. Book this before polishing anything else.</p>
+              <ul>
+                <li>Scopello: prettier, calmer, closer to Zingaro/Tonnara.</li>
+                <li>Castellammare: more practical restaurants, harbor, services.</li>
+                <li>Candidates: Torre Bennistra, Tenute Plaia, Antica Cascina del Golfo, Hotel Cetarium.</li>
+              </ul>
+              <div class="actions">
+                <a class="link-button" href="https://www.google.com/maps/search/Torre+Bennistra+Scopello/" target="_blank" rel="noreferrer">Torre Bennistra</a>
+                <a class="link-button" href="https://www.google.com/maps/search/Tenute+Plaia+Scopello/" target="_blank" rel="noreferrer">Tenute Plaia</a>
+              </div>
             </article>
-            <article class="day">
-              <span class="day-num">3</span>
-              <h3>Drive to Scopello</h3>
-              <p>Settle into the main base and swim at Tonnara di Scopello if access works.</p>
+
+            <article class="hotel">
+              <span class="tag">4 nights</span>
+              <h3>Marsala / Trapani / Favignana</h3>
+              <p class="muted">Pick Marsala for wine/sunset softness, Trapani for ferry practicality, Favignana for pure island mode.</p>
+              <ul>
+                <li>Trapani: easiest ferry day, more practical with car.</li>
+                <li>Marsala: better Dolce Vita ending, salt pans, wine.</li>
+                <li>Favignana: best beach feeling, less convenient with luggage/car.</li>
+                <li>Candidates: Room of Andrea, Palazzo Gatto, Baglio Oneto, I Pretti Resort.</li>
+              </ul>
+              <div class="actions">
+                <a class="link-button" href="https://www.google.com/maps/search/Room+of+Andrea+Trapani/" target="_blank" rel="noreferrer">Room of Andrea</a>
+                <a class="link-button" href="https://www.google.com/maps/search/Baglio+Oneto+Marsala/" target="_blank" rel="noreferrer">Baglio Oneto</a>
+              </div>
             </article>
-            <article class="day">
-              <span class="day-num">4</span>
-              <h3>Zingaro Reserve</h3>
-              <p>Beach hike to Cala Tonnarella dell'Uzzo or Cala dell'Uzzo. Shoes and water.</p>
-            </article>
-            <article class="day">
-              <span class="day-num">5</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="beaches">
+        <div class="shell">
+          <div class="section-head">
+            <h2>Beach Priority List</h2>
+            <p>
+              Go early for the famous ones. Keep Macari and Guidaloca as low-effort
+              backups when parking, wind, or festival crowds get annoying.
+            </p>
+          </div>
+
+          <div class="grid-4">
+            <article class="beach-card" style="background-image: linear-gradient(rgba(5,22,27,.08), rgba(5,22,27,.78)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=78')">
               <h3>San Vito Lo Capo</h3>
-              <p>Beach day, Cous Cous Fest evening, then drive back out before it gets tedious.</p>
+              <p>Best sand. Worst crowd risk during Cous Cous Fest. Visit, do not sleep there.</p>
+              <a class="link-button" href="https://www.google.com/maps/search/San+Vito+Lo+Capo+beach/" target="_blank" rel="noreferrer">Open map</a>
             </article>
-            <article class="day">
-              <span class="day-num">6</span>
-              <h3>Macari Sunset Day</h3>
-              <p>Macari, Bue Marino, slow lunch, no forced itinerary. This is the vacation bit.</p>
+            <article class="beach-card" style="background-image: linear-gradient(rgba(5,22,27,.08), rgba(5,22,27,.78)), url('https://images.unsplash.com/photo-1606220838315-056192d5e927?auto=format&fit=crop&w=800&q=78')">
+              <h3>Zingaro coves</h3>
+              <p>Best wild water. Requires walking, water, shoes, and early start.</p>
+              <a class="link-button" href="https://www.google.com/maps/search/Riserva+dello+Zingaro/" target="_blank" rel="noreferrer">Open map</a>
             </article>
-            <article class="day">
-              <span class="day-num">7</span>
-              <h3>Trapani or Marsala</h3>
-              <p>Move west, check in, salt pans at sunset, seafood dinner.</p>
-            </article>
-            <article class="day">
-              <span class="day-num">8</span>
+            <article class="beach-card" style="background-image: linear-gradient(rgba(5,22,27,.08), rgba(5,22,27,.78)), url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=800&q=78')">
               <h3>Favignana</h3>
-              <p>Hydrofoil from Trapani, rent e-bikes, Cala Rossa, Cala Azzurra, Bue Marino.</p>
+              <p>Cala Rossa, Cala Azzurra, Bue Marino. Rent e-bikes and chase wind direction.</p>
+              <a class="link-button" href="https://www.google.com/maps/search/Cala+Rossa+Favignana/" target="_blank" rel="noreferrer">Open map</a>
             </article>
-            <article class="day">
-              <span class="day-num">9</span>
-              <h3>Marsala Buffer Day</h3>
-              <p>Wine, seafood, beach, or another island day if everyone still has legs.</p>
+            <article class="beach-card" style="background-image: linear-gradient(rgba(5,22,27,.08), rgba(5,22,27,.78)), url('https://images.unsplash.com/photo-1510414842594-a61c69b5ae57?auto=format&fit=crop&w=800&q=78')">
+              <h3>Macari / Bue Marino</h3>
+              <p>Sunset backup, lower effort, great when San Vito is too crowded.</p>
+              <a class="link-button" href="https://www.google.com/maps/search/Bue+Marino+Macari/" target="_blank" rel="noreferrer">Open map</a>
             </article>
-            <article class="day">
-              <span class="day-num">10</span>
-              <h3>Back to Palermo</h3>
-              <p>Drive to PMO, fly home, leave enough margin because car returns love drama.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="food">
+        <div class="shell">
+          <div class="section-head">
+            <h2>Food Targets</h2>
+            <p>
+              Keep lunches simple and dinners deliberate. Sicily is not the place
+              to improvise every meal at 21:30 with four hungry people.
+            </p>
+          </div>
+
+          <div class="grid-3">
+            <article class="food-card">
+              <span class="tag">Palermo</span>
+              <h3>Street food and markets</h3>
+              <ul>
+                <li>Antica Focacceria San Francesco - classic Palermo stop.</li>
+                <li>Nni Franco U Vastiddaru - quick street-food hit.</li>
+                <li>Osteria Ballaro - more proper sit-down dinner.</li>
+                <li>Ke Palle - arancine if you want simple and fast.</li>
+              </ul>
+              <div class="actions">
+                <a class="link-button" href="https://www.google.com/maps/search/Osteria+Ballaro+Palermo/" target="_blank" rel="noreferrer">Osteria Ballaro</a>
+                <a class="link-button" href="https://www.google.com/maps/search/Ke+Palle+Palermo/" target="_blank" rel="noreferrer">Ke Palle</a>
+              </div>
+            </article>
+
+            <article class="food-card">
+              <span class="tag">Scopello / Castellammare</span>
+              <h3>Seafood, views, low drama</h3>
+              <ul>
+                <li>La Tavernetta - Scopello dinner candidate.</li>
+                <li>Bar Nettuno - easy village stop.</li>
+                <li>La Cambusa - Castellammare harbor seafood.</li>
+                <li>Egesta Mare - another Castellammare dinner option.</li>
+              </ul>
+              <div class="actions">
+                <a class="link-button" href="https://www.google.com/maps/search/Bar+Nettuno+Scopello/" target="_blank" rel="noreferrer">Bar Nettuno</a>
+                <a class="link-button" href="https://www.google.com/maps/search/La+Cambusa+Castellammare+del+Golfo/" target="_blank" rel="noreferrer">La Cambusa</a>
+              </div>
+            </article>
+
+            <article class="food-card">
+              <span class="tag">Trapani / Marsala / Favignana</span>
+              <h3>Busiate, tuna, wine</h3>
+              <ul>
+                <li>Osteria La Bettolaccia - Trapani classic candidate.</li>
+                <li>Caupona Taverna - Trapani dinner option.</li>
+                <li>Le Lumie - Marsala refined dinner candidate.</li>
+                <li>SottoSale - Favignana seafood/tuna direction.</li>
+              </ul>
+              <div class="actions">
+                <a class="link-button" href="https://www.google.com/maps/search/Osteria+La+Bettolaccia+Trapani/" target="_blank" rel="noreferrer">La Bettolaccia</a>
+                <a class="link-button" href="https://www.google.com/maps/search/SottoSale+Favignana/" target="_blank" rel="noreferrer">SottoSale</a>
+              </div>
             </article>
           </div>
         </div>
@@ -674,35 +1026,57 @@
       <section class="section" id="booking">
         <div class="shell">
           <div class="section-head">
-            <h2>Book First</h2>
+            <h2>Booking Order</h2>
             <p>
-              Lock the constrained stuff before polishing the itinerary. The rest
-              can stay loose.
+              The right order matters because the festival creates pressure in the
+              exact beach zone we want.
             </p>
           </div>
 
-          <div class="split">
+          <div class="grid-2">
             <section class="checklist">
-              <h3>Priority order</h3>
+              <h3>Do this first</h3>
               <ol>
-                <li>Flights: BER to PMO, ideally 19-28 September.</li>
-                <li>Car rental from Palermo airport. Automatic if needed.</li>
-                <li>Scopello or Castellammare hotel for 4 nights.</li>
-                <li>Palermo first night.</li>
-                <li>Trapani, Marsala, or Favignana for the ending.</li>
+                <li>Check BER to PMO flights for <strong>19-28 Sep 2026</strong> and also <strong>18-27 Sep</strong> as a backup.</li>
+                <li>Confirm the real 4-person flight total with bags and seats. Basic fares lie by omission.</li>
+                <li>Reserve cancellable Scopello/Castellammare stay for 4 nights.</li>
+                <li>Reserve car at Palermo airport. Choose automatic if needed.</li>
+                <li>Then book Palermo first night and Marsala/Trapani/Favignana finish.</li>
               </ol>
             </section>
 
-            <section class="checklist">
-              <h3>Food and beaches</h3>
-              <ul>
-                <li>Palermo: arancine, panelle, sfincione, seafood pasta.</li>
-                <li>San Vito: cous cous during the festival.</li>
-                <li>Trapani: busiate al pesto trapanese.</li>
-                <li>Marsala: seafood, wine, salt-pan aperitivo.</li>
-                <li>Favignana: tuna, granita, Cala Rossa, Cala Azzurra.</li>
-              </ul>
+            <section class="warning">
+              <h3>Decision I would make</h3>
+              <p>
+                <strong>Book Palermo in/out, 19-28 September, 1 night Palermo,
+                4 nights Scopello/Castellammare, 4 nights Marsala or Trapani.</strong>
+                Add Favignana as a day trip unless you find a very good island stay
+                with clean luggage logistics.
+              </p>
+              <p class="fineprint">
+                If the group wants maximum beach fantasy, replace one Marsala night
+                with Favignana. If the group wants easiest logistics, sleep Trapani
+                and day-trip Favignana.
+              </p>
             </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="sources">
+        <div class="shell">
+          <div class="section-head">
+            <h2>Useful Links</h2>
+            <p>Links to re-check before booking, because travel info changes and I refuse fake certainty.</p>
+          </div>
+          <div class="panel sources">
+            <ul>
+              <li><a href="https://ber.berlin-airport.de/en/flying/airlines/destinationen-ab-ber.html" target="_blank" rel="noreferrer">BER airport destinations</a> - sanity check Berlin routes.</li>
+              <li><a href="https://www.ryanair.com/" target="_blank" rel="noreferrer">Ryanair</a>, <a href="https://www.eurowings.com/" target="_blank" rel="noreferrer">Eurowings</a>, and <a href="https://www.google.com/travel/flights" target="_blank" rel="noreferrer">Google Flights</a> - current fare checks.</li>
+              <li><a href="https://www.visitsicily.info/en/evento-new/cous-cous-fest-2026/" target="_blank" rel="noreferrer">Visit Sicily - Cous Cous Fest 2026</a> - festival dates and details.</li>
+              <li><a href="https://www.google.com/maps/search/Trapani+Favignana+ferry/" target="_blank" rel="noreferrer">Trapani to Favignana ferry map</a> - check port location and ferry operators.</li>
+              <li><a href="https://www.google.com/maps/search/Riserva+dello+Zingaro/" target="_blank" rel="noreferrer">Riserva dello Zingaro map</a> - check entrances and driving time from hotel.</li>
+            </ul>
           </div>
         </div>
       </section>
@@ -710,8 +1084,9 @@
 
     <footer class="footer">
       <div class="shell">
-        Recommendation: book Palermo in/out, 1 night Palermo, 4 nights
-        Scopello/Castellammare, 4 nights Trapani/Marsala/Favignana.
+        Built as a draft travel assistant plan. Before paying: re-check flight
+        totals, hotel cancellation terms, ferry schedules, Zingaro opening/access,
+        and festival crowd conditions.
       </div>
     </footer>
   </body>
