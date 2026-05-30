@@ -319,6 +319,114 @@
         background: #dce9e8;
       }
 
+      .leaflet-container {
+        position: relative;
+        overflow: hidden;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+      }
+
+      .leaflet-pane,
+      .leaflet-tile,
+      .leaflet-marker-icon,
+      .leaflet-marker-shadow,
+      .leaflet-tile-container,
+      .leaflet-pane > svg,
+      .leaflet-pane > canvas,
+      .leaflet-zoom-box,
+      .leaflet-image-layer,
+      .leaflet-layer {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      .leaflet-tile,
+      .leaflet-marker-icon,
+      .leaflet-marker-shadow {
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+
+      .leaflet-tile {
+        border: 0;
+        visibility: inherit;
+      }
+
+      .leaflet-tile-container {
+        pointer-events: none;
+      }
+
+      .leaflet-map-pane,
+      .leaflet-tile-pane,
+      .leaflet-overlay-pane,
+      .leaflet-shadow-pane,
+      .leaflet-marker-pane,
+      .leaflet-tooltip-pane,
+      .leaflet-popup-pane {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      .leaflet-map-pane {
+        z-index: 400;
+      }
+
+      .leaflet-tile-pane {
+        z-index: 200;
+      }
+
+      .leaflet-overlay-pane {
+        z-index: 400;
+      }
+
+      .leaflet-shadow-pane {
+        z-index: 500;
+      }
+
+      .leaflet-marker-pane {
+        z-index: 600;
+      }
+
+      .leaflet-tooltip-pane {
+        z-index: 650;
+      }
+
+      .leaflet-popup-pane {
+        z-index: 700;
+      }
+
+      .leaflet-control {
+        position: relative;
+        z-index: 800;
+        pointer-events: auto;
+      }
+
+      .leaflet-top,
+      .leaflet-bottom {
+        position: absolute;
+        z-index: 1000;
+        pointer-events: none;
+      }
+
+      .leaflet-top {
+        top: 0;
+      }
+
+      .leaflet-right {
+        right: 0;
+      }
+
+      .leaflet-bottom {
+        bottom: 0;
+      }
+
+      .leaflet-left {
+        left: 0;
+      }
+
       .map-fallback {
         display: grid;
         min-height: 220px;
@@ -664,6 +772,48 @@
         gap: 8px;
       }
 
+      .hotel-visual {
+        min-height: 190px;
+        overflow: hidden;
+        border-radius: 8px;
+        border: 1px solid rgba(222, 212, 196, 0.9);
+        background: var(--wash);
+      }
+
+      .hotel-visual img {
+        width: 100%;
+        height: 100%;
+        min-height: 190px;
+        display: block;
+        object-fit: cover;
+      }
+
+      .base-facts {
+        display: grid;
+        gap: 8px;
+        margin: 8px 0;
+      }
+
+      .base-fact {
+        padding: 10px;
+        border: 1px solid rgba(222, 212, 196, 0.9);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.58);
+      }
+
+      .base-fact b {
+        display: block;
+        margin-bottom: 2px;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+      }
+
+      .base-fact span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.86rem;
+      }
+
       .hotel ul,
       .food-card ul,
       .checklist ul,
@@ -706,6 +856,30 @@
 
       .flight-box .panel {
         box-shadow: none;
+      }
+
+      .cost-grid {
+        display: grid;
+        gap: 8px;
+        margin: 12px 0 6px;
+      }
+
+      .cost-row {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 10px;
+        padding: 10px;
+        border: 1px solid rgba(222, 212, 196, 0.9);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.58);
+      }
+
+      .cost-row b {
+        color: var(--ink);
+      }
+
+      .cost-row span {
+        color: var(--muted);
       }
 
       .sources {
@@ -784,7 +958,8 @@
 
         .place-board,
         .stop-grid,
-        .day-extra {
+        .day-extra,
+        .cost-row {
           grid-template-columns: 1fr;
         }
 
@@ -969,8 +1144,27 @@
                 <li>Parking matters: choose hotels with parking or clear nearby paid parking.</li>
                 <li>Keep driving windows short: the plan avoids the Palermo to Catania axis entirely.</li>
               </ul>
+              <div class="cost-grid" aria-label="Estimated rental car cost">
+                <div class="cost-row">
+                  <b>Cheap quote bait</b>
+                  <span>EUR 170-320 total for 9 days if you find a compact/manual/off-airport deal. Treat this as suspicious until luggage, deposit, pickup location, and insurance are clear.</span>
+                </div>
+                <div class="cost-row">
+                  <b>Sane booking range</b>
+                  <span>EUR 550-900 total for an automatic compact SUV or roomy hatchback with decent coverage. This is the number I would budget for 4 people.</span>
+                </div>
+                <div class="cost-row">
+                  <b>Fuel + parking</b>
+                  <span>Budget another EUR 110-180: roughly EUR 65-90 fuel for about 520 km, plus city/port parking and the occasional paid lot.</span>
+                </div>
+              </div>
+              <p class="fineprint">
+                Snapshot checked 30 May 2026: Palermo Airport aggregators show very low teaser prices from about EUR 15-25/day, but September SUV averages are much higher. The honest budget is the full-trip total after insurance and airport logistics, not the shiny daily rate.
+              </p>
               <div class="actions">
                 <a class="link-button" href="https://www.google.com/maps/search/car+rental+Palermo+Airport/" target="_blank" rel="noreferrer">Rental desks map</a>
+                <a class="link-button" href="https://www.discovercars.com/suv/palermo-airport-pmo_1627" target="_blank" rel="noreferrer">SUV price reference</a>
+                <a class="link-button" href="https://www.skyscanner.net/car-hire-from/pmo/car-hire-from-palermo-airport.html" target="_blank" rel="noreferrer">Skyscanner cars</a>
                 <a class="link-button" href="https://www.google.com/maps/search/parking+Palermo+historic+center/" target="_blank" rel="noreferrer">Palermo parking</a>
               </div>
             </div>
@@ -1245,7 +1439,14 @@
             <article class="hotel">
               <span class="tag">1 night</span>
               <h3>Palermo center</h3>
+              <figure class="hotel-visual">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/b/b6/Quattro_canti_%28Palermo%29_01.jpg" alt="Quattro Canti in Palermo historic center" loading="lazy" />
+              </figure>
               <p class="muted">Best for the first night if arrival is afternoon/evening. Stay central; do not optimize for a beach on arrival day.</p>
+              <div class="base-facts">
+                <div class="base-fact"><b>Why sleep here</b><span>Fastest first-night payoff: markets, street food, old-town walk, no long transfer after landing.</span></div>
+                <div class="base-fact"><b>Watch-out</b><span>Old-town driving and ZTL zones are annoying. Park once, walk, and leave the car alone.</span></div>
+              </div>
               <ul>
                 <li>Look near Kalsa, Quattro Canti, Politeama, or Via Maqueda.</li>
                 <li>Parking plan required: hotel garage or paid lot nearby.</li>
@@ -1260,7 +1461,14 @@
             <article class="hotel">
               <span class="tag hot">Book first</span>
               <h3>Scopello / Castellammare</h3>
+              <figure class="hotel-visual">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2d/Tonnara_di_Scopelo_-_General_view.JPG" alt="Tonnara di Scopello and sea stacks" loading="lazy" />
+              </figure>
               <p class="muted">This is the constrained base because your dates overlap San Vito festival traffic. Book this before polishing anything else.</p>
+              <div class="base-facts">
+                <div class="base-fact"><b>Why sleep here</b><span>This is the trip's beach engine: Zingaro, Tonnara, Guidaloca, Macari, and San Vito are all manageable.</span></div>
+                <div class="base-fact"><b>Pick between them</b><span>Scopello for charm and proximity; Castellammare for restaurants, harbor, parking, and practical services.</span></div>
+              </div>
               <ul>
                 <li>Scopello: prettier, calmer, closer to Zingaro/Tonnara.</li>
                 <li>Castellammare: more practical restaurants, harbor, services.</li>
@@ -1275,7 +1483,14 @@
             <article class="hotel">
               <span class="tag">4 nights</span>
               <h3>Marsala / Trapani / Favignana</h3>
+              <figure class="hotel-visual">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/92/Marsala-salinen-windmuehlen-b.jpg" alt="Marsala salt pans and windmill at sunset" loading="lazy" />
+              </figure>
               <p class="muted">Pick Marsala for wine/sunset softness, Trapani for ferry practicality, Favignana for pure island mode.</p>
+              <div class="base-facts">
+                <div class="base-fact"><b>Why sleep here</b><span>The end of the trip becomes sunset, seafood, salt pans, wine, and the Favignana ferry day.</span></div>
+                <div class="base-fact"><b>Best call</b><span>Trapani if ferry simplicity wins. Marsala if the final evenings matter more than logistics.</span></div>
+              </div>
               <ul>
                 <li>Trapani: easiest ferry day, more practical with car.</li>
                 <li>Marsala: better Dolce Vita ending, salt pans, wine.</li>
@@ -1435,6 +1650,7 @@
             <ul>
               <li><a href="https://ber.berlin-airport.de/en/flying/airlines/destinationen-ab-ber.html" target="_blank" rel="noreferrer">BER airport destinations</a> - sanity check Berlin routes.</li>
               <li><a href="https://www.ryanair.com/" target="_blank" rel="noreferrer">Ryanair</a>, <a href="https://www.eurowings.com/" target="_blank" rel="noreferrer">Eurowings</a>, and <a href="https://www.google.com/travel/flights" target="_blank" rel="noreferrer">Google Flights</a> - current fare checks.</li>
+              <li><a href="https://www.discovercars.com/suv/palermo-airport-pmo_1627" target="_blank" rel="noreferrer">DiscoverCars Palermo SUV reference</a>, <a href="https://www.skyscanner.net/car-hire-from/pmo/car-hire-from-palermo-airport.html" target="_blank" rel="noreferrer">Skyscanner Palermo car hire</a>, and <a href="https://www.rhinocarhire.com/Sicily/Palermo-Airport-Car-Hire.aspx" target="_blank" rel="noreferrer">Rhino Palermo Airport averages</a> - car estimate sanity check.</li>
               <li><a href="https://www.visitsicily.info/en/evento-new/cous-cous-fest-2026/" target="_blank" rel="noreferrer">Visit Sicily - Cous Cous Fest 2026</a> - festival dates and details.</li>
               <li><a href="https://www.google.com/maps/search/Trapani+Favignana+ferry/" target="_blank" rel="noreferrer">Trapani to Favignana ferry map</a> - check port location and ferry operators.</li>
               <li><a href="https://www.google.com/maps/search/Riserva+dello+Zingaro/" target="_blank" rel="noreferrer">Riserva dello Zingaro map</a> - check entrances and driving time from hotel.</li>
