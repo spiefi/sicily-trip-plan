@@ -882,6 +882,45 @@
         color: var(--muted);
       }
 
+      .transport-verdict {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 14px;
+        margin-top: 14px;
+      }
+
+      .route-steps {
+        display: grid;
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .route-step {
+        display: grid;
+        grid-template-columns: 44px 1fr;
+        gap: 10px;
+        align-items: start;
+        padding: 12px;
+        border: 1px solid rgba(222, 212, 196, 0.9);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.58);
+      }
+
+      .route-step b {
+        display: grid;
+        width: 34px;
+        height: 34px;
+        place-items: center;
+        border-radius: 50%;
+        color: white;
+        background: var(--deep);
+      }
+
+      .route-step span {
+        display: block;
+        color: var(--muted);
+      }
+
       .sources {
         font-size: 0.9rem;
       }
@@ -927,7 +966,7 @@
         .nav-links {
           width: 100%;
           display: grid;
-          grid-template-columns: repeat(4, max-content);
+          grid-template-columns: repeat(auto-fit, minmax(76px, 1fr));
         }
 
         .hero-stats,
@@ -935,6 +974,7 @@
         .grid-3,
         .grid-4,
         .route-layout,
+        .transport-verdict,
         .flight-box,
         .day-grid {
           grid-template-columns: 1fr;
@@ -977,6 +1017,7 @@
           <div class="nav-links" aria-label="Page navigation">
             <a href="#route">Route</a>
             <a href="#map">Map</a>
+            <a href="#transport">Transport</a>
             <a href="#days">Days</a>
             <a href="#map">Places</a>
             <a href="#stays">Hotels</a>
@@ -987,18 +1028,18 @@
       </nav>
 
       <div class="shell hero-copy">
-        <div class="kicker"><span class="dot"></span> Draft plan checked 29 May 2026</div>
+        <div class="kicker"><span class="dot"></span> Draft plan checked 30 May 2026</div>
         <h1>Sicily, but lazy<br />in the correct<br />places.</h1>
         <p>
           9 nights around 19-28 September 2026 for 4 people. Berlin to Palermo,
-          rental car, three bases, beaches first, food always, and no performative
-          island-crossing nonsense.
+          three bases, beaches first, food always, and a car-vs-transfer decision
+          that is now visible instead of hidden in the travel fog.
         </p>
         <div class="hero-stats" aria-label="Trip summary">
           <div class="stat"><strong>19-28 Sep</strong><span>best date shape</span></div>
           <div class="stat"><strong>BER-PMO</strong><span>target flights</span></div>
           <div class="stat"><strong>3 bases</strong><span>Palermo, Scopello, Marsala</span></div>
-          <div class="stat"><strong>~520 km</strong><span>total relaxed driving</span></div>
+          <div class="stat"><strong>Car?</strong><span>recommended, not mandatory</span></div>
           <div class="stat"><strong>4 people</strong><span>book early for September</span></div>
         </div>
       </div>
@@ -1168,6 +1209,97 @@
                 <a class="link-button" href="https://www.google.com/maps/search/parking+Palermo+historic+center/" target="_blank" rel="noreferrer">Palermo parking</a>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="transport">
+        <div class="shell">
+          <div class="section-head">
+            <h2>No-Car Alternative</h2>
+            <p>
+              Possible, but the honest version is not "public transport only".
+              It is trains/buses for the big moves, then paid transfers or taxis
+              for beach days where buses get stupid.
+            </p>
+          </div>
+
+          <div class="flight-box">
+            <div class="panel">
+              <span class="tag">Recommended</span>
+              <h3>Car for the whole trip</h3>
+              <div class="cost-grid" aria-label="Estimated car trip cost">
+                <div class="cost-row">
+                  <b>Car + coverage</b>
+                  <span>EUR 550-900 total is the sensible 4-person rental budget for 9 days.</span>
+                </div>
+                <div class="cost-row">
+                  <b>Fuel + parking</b>
+                  <span>EUR 110-180 extra for fuel, paid lots, ports, and city edges.</span>
+                </div>
+                <div class="cost-row">
+                  <b>Total mobility</b>
+                  <span>EUR 660-1,080, or roughly EUR 165-270 per person before flights.</span>
+                </div>
+              </div>
+              <p class="fineprint">
+                Best for Zingaro, Tonnara, Macari, San Vito, Erice, salt pans, and spontaneous swims. Also best for luggage and late dinners.
+              </p>
+            </div>
+
+            <div class="panel">
+              <span class="tag hot">Alternative</span>
+              <h3>No car, but not naive</h3>
+              <div class="cost-grid" aria-label="Estimated no-car transport cost">
+                <div class="cost-row">
+                  <b>Public transport core</b>
+                  <span>EUR 180-320 total for 4 people across airport train, Palermo-Castellammare/Trapani/Marsala moves, and Trapani-Favignana ferry tickets.</span>
+                </div>
+                <div class="cost-row">
+                  <b>Taxis/transfers</b>
+                  <span>EUR 420-850 total if you use paid transfers for Palermo-Scopello, Scopello-Trapani/Marsala, beach hops, and one airport return.</span>
+                </div>
+                <div class="cost-row">
+                  <b>Total mobility</b>
+                  <span>EUR 600-1,170, or roughly EUR 150-293 per person. It can match car cost, but with less freedom.</span>
+                </div>
+              </div>
+              <p class="fineprint">
+                Use this if nobody wants to drive, parking anxiety is high, or the group is happy to pre-book transfers. Do not pretend random buses will solve beach timing during festival week.
+              </p>
+            </div>
+          </div>
+
+          <div class="transport-verdict">
+            <section class="warning">
+              <h3>My call</h3>
+              <p>
+                <strong>Keep the car plan unless the driver situation is genuinely bad.</strong>
+                For 4 people, taxis/transfers do not save enough money to justify the lost flexibility. The car is boring-but-correct.
+              </p>
+              <p class="fineprint">
+                If going no-car, change the bases: Palermo 2 nights, Castellammare 4 nights, Trapani 3 nights. Trapani beats Marsala without a car because ferry, buses, and taxis are easier.
+              </p>
+            </section>
+
+            <section class="panel">
+              <span class="tag">How no-car works</span>
+              <h3>Use this routing</h3>
+              <div class="route-steps">
+                <div class="route-step"><b>1</b><span><strong>PMO to Palermo:</strong> train/shuttle/taxi. Easy. Sleep central and walk.</span></div>
+                <div class="route-step"><b>2</b><span><strong>Palermo to Castellammare:</strong> bus or train/taxi combo. Stay in Castellammare, not isolated Scopello, unless hotel can arrange transfers.</span></div>
+                <div class="route-step"><b>3</b><span><strong>Zingaro/Tonnara/Macari:</strong> pre-book taxi or hotel transfer. This is the weak point of no-car Sicily.</span></div>
+                <div class="route-step"><b>4</b><span><strong>Castellammare to Trapani:</strong> train/bus or paid transfer. Sleep Trapani for the Favignana ferry.</span></div>
+                <div class="route-step"><b>5</b><span><strong>Trapani to Favignana:</strong> hydrofoil ferry, then e-bikes. This part is excellent without a car.</span></div>
+                <div class="route-step"><b>6</b><span><strong>Trapani to PMO:</strong> direct bus if timing fits; otherwise private airport transfer.</span></div>
+              </div>
+              <div class="actions">
+                <a class="link-button" href="https://www.trenitalia.com/" target="_blank" rel="noreferrer">Trenitalia</a>
+                <a class="link-button" href="https://www.segesta.it/" target="_blank" rel="noreferrer">Segesta buses</a>
+                <a class="link-button" href="https://www.libertylines.it/" target="_blank" rel="noreferrer">Favignana ferry</a>
+                <a class="link-button" href="https://www.google.com/maps/search/private+transfer+Palermo+Airport+Scopello/" target="_blank" rel="noreferrer">Transfer search</a>
+              </div>
+            </section>
           </div>
         </div>
       </section>
@@ -1617,7 +1749,9 @@
                 <li>Check BER to PMO flights for <strong>19-28 Sep 2026</strong> and also <strong>18-27 Sep</strong> as a backup.</li>
                 <li>Confirm the real 4-person flight total with bags and seats. Basic fares lie by omission.</li>
                 <li>Reserve cancellable Scopello/Castellammare stay for 4 nights.</li>
-                <li>Reserve car at Palermo airport. Choose automatic if needed.</li>
+                <li>Decide car vs no-car before booking remote hotels. This decision changes the best base.</li>
+                <li>If car: reserve Palermo airport rental, ideally automatic with decent coverage.</li>
+                <li>If no-car: book Castellammare and Trapani bases, then pre-price two or three transfers.</li>
                 <li>Then book Palermo first night and Marsala/Trapani/Favignana finish.</li>
               </ol>
             </section>
@@ -1631,9 +1765,9 @@
                 with clean luggage logistics.
               </p>
               <p class="fineprint">
-                If the group wants maximum beach fantasy, replace one Marsala night
-                with Favignana. If the group wants easiest logistics, sleep Trapani
-                and day-trip Favignana.
+                If the group rejects driving, switch to Palermo 2 nights, Castellammare
+                4 nights, Trapani 3 nights. Marsala becomes a taxi/train day-trip,
+                not the main base.
               </p>
             </section>
           </div>
@@ -1651,6 +1785,8 @@
               <li><a href="https://ber.berlin-airport.de/en/flying/airlines/destinationen-ab-ber.html" target="_blank" rel="noreferrer">BER airport destinations</a> - sanity check Berlin routes.</li>
               <li><a href="https://www.ryanair.com/" target="_blank" rel="noreferrer">Ryanair</a>, <a href="https://www.eurowings.com/" target="_blank" rel="noreferrer">Eurowings</a>, and <a href="https://www.google.com/travel/flights" target="_blank" rel="noreferrer">Google Flights</a> - current fare checks.</li>
               <li><a href="https://www.discovercars.com/suv/palermo-airport-pmo_1627" target="_blank" rel="noreferrer">DiscoverCars Palermo SUV reference</a>, <a href="https://www.skyscanner.net/car-hire-from/pmo/car-hire-from-palermo-airport.html" target="_blank" rel="noreferrer">Skyscanner Palermo car hire</a>, and <a href="https://www.rhinocarhire.com/Sicily/Palermo-Airport-Car-Hire.aspx" target="_blank" rel="noreferrer">Rhino Palermo Airport averages</a> - car estimate sanity check.</li>
+              <li><a href="https://www.trenitalia.com/" target="_blank" rel="noreferrer">Trenitalia</a>, <a href="https://www.segesta.it/" target="_blank" rel="noreferrer">Segesta Autolinee</a>, and <a href="https://www.libertylines.it/" target="_blank" rel="noreferrer">Liberty Lines</a> - no-car route and ferry checks.</li>
+              <li><a href="https://www.google.com/maps/search/private+transfer+Palermo+Airport+Scopello/" target="_blank" rel="noreferrer">Palermo airport to Scopello transfer search</a> and <a href="https://www.google.com/maps/search/taxi+Castellammare+del+Golfo+Scopello/" target="_blank" rel="noreferrer">Castellammare/Scopello taxi search</a> - local transfer fallback.</li>
               <li><a href="https://www.visitsicily.info/en/evento-new/cous-cous-fest-2026/" target="_blank" rel="noreferrer">Visit Sicily - Cous Cous Fest 2026</a> - festival dates and details.</li>
               <li><a href="https://www.google.com/maps/search/Trapani+Favignana+ferry/" target="_blank" rel="noreferrer">Trapani to Favignana ferry map</a> - check port location and ferry operators.</li>
               <li><a href="https://www.google.com/maps/search/Riserva+dello+Zingaro/" target="_blank" rel="noreferrer">Riserva dello Zingaro map</a> - check entrances and driving time from hotel.</li>
